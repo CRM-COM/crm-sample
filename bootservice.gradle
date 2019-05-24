@@ -1,0 +1,50 @@
+springBoot {
+	buildInfo()
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+	    enabled = true
+}
+
+// look for top level java file
+ext.findMainClass= { ->
+	def mainFile=new FileNameFinder().getFileNames("${project.projectDir}","src/main/java/*/*.java")[0]
+	if (mainFile == null) 
+		mainFile = new FileNameFinder().getFileNames("${project.projectDir}","src/main/java/*/*/*.java")[0]
+	mainFile=mainFile.replaceAll("\\\\","/")
+	def start = mainFile.indexOf("src/main/java")
+	def className = mainFile.substring(start+14).replace(".java","").replaceAll("/",".")
+	return className
+}
+
+task configureJar() {
+	doLast {
+				jar {
+					manifest {
+						attributes (
+							'Main-Class': findMainClass() ,
+							'Class-Path': configurations.runtimeClasspath.files.collect { "libs/$it.name" }.join(' ')
+						)
+					}
+				}
+	}
+}
+jar.dependsOn(configureJar)
+
+task prepareJars(type: Copy) {
+	from configurations.runtimeClasspath
+	into "${project.projectDir}/build/docker/build/jars"
+}
+
+
+docker {
+    name "$registry/$project.name"
+    tags  "$commitId", "$version", "latest"
+    copySpec.from("build/libs").into("build/libs")
+
+	dependsOn tasks.prepareJars
+}

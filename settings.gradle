@@ -1,0 +1,25 @@
+rootProject.name = 'crm'
+
+include 'gateway:gateway-service'
+include 'gateway:swagger-gateway-service'
+include 'member:member-service'
+include 'commerce:commerce-service'
+include 'common'
+include 'common:common-core'
+include 'common:common-service'
+include 'common:common-jpa'
+include 'common:common-kafka'
+
+//def lookupForProjects(def root, def path) {
+//    root.listFiles().each {
+//        if (it.isDirectory()) {
+//            if (it.list({ dir, name -> name == 'build.gradle' }).length > 0) {
+//                include path + it.name
+//                lookupForProjects(it, "$path$it.name:")
+//            }
+//        }
+//    }
+//}
+//
+//lookupForProjects(rootDir, '')
+

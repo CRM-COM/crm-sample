@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: member-service
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST}:3306/member?useSSL=false
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: infra-kafka.infra.svc.cluster.local:9092
+      bindings:
+        member-in:
+          destination: member
+          contentType: application/json
+        member-out:
+          destination: member
+          contentType: application/json
+server:
+  port: 9014
+
+encryption:
+  seed: 84aafbfc73d8184a2d0b8d86b002b13d
+  strength: 11

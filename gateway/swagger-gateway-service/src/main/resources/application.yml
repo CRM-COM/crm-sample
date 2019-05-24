@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: swagger-gateway-service
+server:
+  port: 8889
+
+ribbon:
+  eureka:
+    enabled: false

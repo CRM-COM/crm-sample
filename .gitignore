@@ -1,0 +1,33 @@
+bin/
+logs/
+*.log
+*.zip
+*.pyc
+*.pyo
+*.mp4
+sources/
+finished/
+.camel/
+*.prefs
+
+# Gradle generated objects
+.gradle/
+version.properties
+
+# Build objects
+**/build/
+**/target/
+**/out/
+**/bin/
+**/src/querydsl
+
+# Ignore IDEA project file
+.idea
+**/*.iml
+**/*.ipr
+
+# Ignore Eclipse project file
+**/.classpath
+**/.project
+**/.settings/
+

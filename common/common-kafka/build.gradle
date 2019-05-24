@@ -1,0 +1,30 @@
+buildscript {
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:$springDependencyManagementVersion"
+    }
+}
+plugins {
+    id 'ru.vyarus.pom' version '1.3.0'
+}
+
+
+apply plugin: 'io.spring.dependency-management'
+
+ext {
+    name = 'commons-kafka'
+    description = 'Common Kafka Module'
+}
+
+dependencies {
+    api project(':common:common-core')
+    api 'org.springframework.cloud:spring-cloud-stream'
+    api 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
+    testImplementation 'junit:junit'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:$springBootVersion"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
+}
