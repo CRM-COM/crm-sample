@@ -8,24 +8,20 @@ image:
   baseRepository: eu.gcr.io/crm-ecenter
   tag: stable
   pullPolicy: IfNotPresent
-  name: member-service
+  name: gateway-service
 
 service:
-  type: ClusterIP
-  port: 9014
-
-database:
-  enabled: true
-  name: messages
-  mode: rw
-
-domain: sql ip
+  type: NodePort
+  port: 8887
 
 features:
-  remoteDebugging: true  # move it to env config!
+  remoteDebugging: true
+
+database:
+  enabled: false
 
 ingress:
-  enabled: false
+  enabled: true
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

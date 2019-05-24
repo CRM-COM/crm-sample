@@ -1,0 +1,23 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "backend-service.fullname" . -}}
+{{- $servicePort := .Values.service.port -}}
+{{- $ingressPath := .Values.ingress.path -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app: {{ template "backend-service.name" . }}
+    chart: {{ template "backend-service.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.global-static-ip-name: api-static-ip
+    networking.gke.io/managed-certificates: api
+spec:
+  backend:
+    serviceName: gateway-service
+    servicePort: 8887
+
+{{- end }}

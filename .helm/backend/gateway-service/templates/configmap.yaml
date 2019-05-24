@@ -1,0 +1,25 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ template "backend-service.fullname" . }}
+data:
+  application.yaml: |-
+    spring:
+      cloud:
+        gateway:
+          default-filters:
+          - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_LAST
+          globalcors:
+            corsConfigurations:
+              '[/**]':
+                allowedOrigins: "*"
+                allowedMethods: "*"
+                allowCredentials: true
+                allowedHeaders: "*"
+          routes:
+            - id: twilio
+              uri: http://twilio-delivery:8080
+              predicates:
+                - Path=/twilio/**
+              filters:
+                - StripPrefix=1
