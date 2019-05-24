@@ -20,7 +20,7 @@ plugins {
 
 apply from: 'versioning.gradle'
 
-ext.dockerRegistry = project.hasProperty('dockerRegistry') ? project.getProperty('dockerRegistry') : 'eu.gcr.io/utility-233810'
+ext.dockerRegistry = project.hasProperty('dockerRegistry') ? project.getProperty('dockerRegistry') : 'eu.gcr.io/crm-ecenter'
 ext.commitId = getCommitId()
 
 subprojects {

@@ -1,0 +1,97 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:11-jdk
+
+    working_directory: ~/vizulink
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+
+    steps:
+      - checkout
+      - setup_remote_docker
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies-
+
+      - run:
+          name: Build
+          command: ./gradlew build
+
+      - run:
+          name: Create docker images
+          command: ./gradlew docker
+
+      - run:
+          name: Create docker cache
+          command: mkdir -p docker-cache
+
+      - run:
+          name: Add docker images to cache
+          command: |
+            docker save -o docker-cache/member-image.tar eu.gcr.io/crm-ecenter/member-service:latest
+            docker save -o docker-cache/commerce-image.tar eu.gcr.io/crm-ecenter/commerce-service:latest
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - docker-cache
+
+  deploy-staging:
+    working_directory: ~/vizulink
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - checkout
+      - setup_remote_docker
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Load docker image from cache
+          command: |
+            docker load --input docker-cache/member-image.tar
+            docker load --input docker-cache/commerce-image.tar
+
+      - run:
+          name: Google authentication
+          command:  |
+            export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/gcp-key.json
+            echo ${GCLOUD_SERVICE_KEY} > ${GOOGLE_APPLICATION_CREDENTIALS}
+            gcloud auth activate-service-account --key-file ${GOOGLE_APPLICATION_CREDENTIALS}
+            gcloud auth configure-docker
+
+      - run:
+          name: Push docker images
+          command: |
+            docker push eu.gcr.io/crm-ecenter/member-service:latest
+            docker push eu.gcr.io/crm-ecenter/commerce-service:latest
+      - run:
+          name: Set current context
+          command: gcloud container clusters get-credentials standard-cluster-1 --zone europe-west2-b --project crm-ecenter
+
+      - run:
+          name: Deploy
+          command: |
+            for i in .helm/*; do
+              helm upgrade --install ${i##*/} --namespace=backend --set-string image.tag=$VERSION  $i
+            done
+
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - build:
+          context: dev
+      - deploy-staging:
+          context: dev
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+

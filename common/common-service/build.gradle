@@ -11,7 +11,7 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 
 ext {
-    name = 'commons-service'
+    name = 'common-service'
     description = 'Common Service Module'
 }
 
