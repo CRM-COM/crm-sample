@@ -34,7 +34,7 @@ jobs:
           name: Add docker images to cache
           command: |
             docker save -o docker-cache/member-image.tar eu.gcr.io/crm-ecenter/member-service:latest
-            docker save -o docker-cache/commerce-image.tar eu.gcr.io/crm-ecenter/commerce-service:latest
+#            docker save -o docker-cache/commerce-image.tar eu.gcr.io/crm-ecenter/commerce-service:latest
 
       - persist_to_workspace:
           root: .
@@ -55,7 +55,7 @@ jobs:
           name: Load docker image from cache
           command: |
             docker load --input docker-cache/member-image.tar
-            docker load --input docker-cache/commerce-image.tar
+#            docker load --input docker-cache/commerce-image.tar
 
       - run:
           name: Google authentication
@@ -69,7 +69,7 @@ jobs:
           name: Push docker images
           command: |
             docker push eu.gcr.io/crm-ecenter/member-service:latest
-            docker push eu.gcr.io/crm-ecenter/commerce-service:latest
+#            docker push eu.gcr.io/crm-ecenter/commerce-service:latest
       - run:
           name: Set current context
           command: gcloud container clusters get-credentials standard-cluster-1 --zone europe-west2-b --project crm-ecenter

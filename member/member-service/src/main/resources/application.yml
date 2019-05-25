@@ -4,14 +4,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST}:3306/member?useSSL=false
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
-
   cloud:
     stream:
       kafka:

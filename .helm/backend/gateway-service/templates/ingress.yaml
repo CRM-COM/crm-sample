@@ -13,7 +13,7 @@ metadata:
     heritage: {{ .Release.Service }}
   annotations:
     kubernetes.io/ingress.class: gce
-    kubernetes.io/ingress.global-static-ip-name: api-static-ip
+    kubernetes.io/ingress.global-static-ip-name: gateway-static-ip
     networking.gke.io/managed-certificates: api
 spec:
   backend:

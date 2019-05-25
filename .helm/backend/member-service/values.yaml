@@ -16,10 +16,10 @@ service:
 
 database:
   enabled: true
-  name: messages
+  name: member
   mode: rw
 
-domain: sql ip
+domain: crmcloudapi.com
 
 features:
   remoteDebugging: true  # move it to env config!
