@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   baseRepository: eu.gcr.io/crm-ecenter
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   name: member-service
 
 service:

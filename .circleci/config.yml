@@ -81,7 +81,7 @@ jobs:
           name: Deploy
           command: |
             for i in .helm/*; do
-              helm upgrade --install ${i##*/} --namespace=backend --set-string image.tag=$VERSION  $i
+              helm upgrade --install ${i##*/} --namespace=backend --set-string image.tag=latest  $i
             done
 
 workflows:
