@@ -61,7 +61,7 @@ jobs:
           name: Google authentication
           command:  |
             export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/gcp-key.json
-            echo ${GCLOUD_SERVICE_KEY} > ${GOOGLE_APPLICATION_CREDENTIALS}
+            echo ${GCLOUD_SERVICE_KEY} | base64 --decode > ${GOOGLE_APPLICATION_CREDENTIALS}
             gcloud auth activate-service-account --key-file ${GOOGLE_APPLICATION_CREDENTIALS}
             gcloud auth configure-docker
 
