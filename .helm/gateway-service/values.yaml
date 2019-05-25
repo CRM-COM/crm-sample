@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   baseRepository: eu.gcr.io/crm-ecenter
-  tag: stable
+  tag: latest
   pullPolicy: IfNotPresent
   name: gateway-service
 
