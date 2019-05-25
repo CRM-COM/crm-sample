@@ -41,7 +41,7 @@ jobs:
           paths:
             - docker-cache
 
-  deploy-staging:
+  deploy-dev:
     working_directory: ~/vizulink
     docker:
       - image: google/cloud-sdk
@@ -86,9 +86,9 @@ workflows:
   build_test_deploy:
     jobs:
       - build:
-          context: dev
-      - deploy-staging:
-          context: dev
+          context: dev-crm
+      - deploy-dev:
+          context: dev-crm
           requires:
             - build
           filters:
