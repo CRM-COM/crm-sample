@@ -17,9 +17,9 @@ data:
                 allowCredentials: true
                 allowedHeaders: "*"
           routes:
-            - id: twilio
-              uri: http://twilio-delivery:8080
+            - id: member
+              uri: http://member-service:9014
               predicates:
-                - Path=/twilio/**
+                - Path=/api/member/**
               filters:
                 - StripPrefix=1

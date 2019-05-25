@@ -72,7 +72,7 @@ jobs:
 #            docker push eu.gcr.io/crm-ecenter/commerce-service:latest
       - run:
           name: Set current context
-          command: gcloud container clusters get-credentials standard-cluster-1 --zone europe-west2-b --project crm-ecenter
+          command: gcloud container clusters get-credentials crm-ecenter-cluster --zone europe-west2-b --project crm-ecenter
 
       - run:
           name: Deploy
