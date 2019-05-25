@@ -44,7 +44,7 @@ jobs:
   deploy-dev:
     working_directory: ~/vizulink
     docker:
-      - image: google/cloud-sdk
+      - image: kaktooss/k8s:latest
     steps:
       - checkout
       - setup_remote_docker
