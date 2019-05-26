@@ -4,6 +4,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+    generate-ddl: true
   cloud:
     stream:
       kafka:
