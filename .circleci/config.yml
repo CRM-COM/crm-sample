@@ -32,9 +32,7 @@ jobs:
       - run:
           name: Add docker images to cache
           command: |
-            mkdir workspace
-
-            echo "$VERSION" >> workspace/version.txt
+            echo "$VERSION" >> version.txt
             echo "Building image $VERSION"
 
             docker save -o docker-cache/member-image.tar eu.gcr.io/crm-ecenter/member-service:${VERSION}
