@@ -17,7 +17,6 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
             - v1-dependencies-
-
       - run:
           name: Build
           command: ./gradlew build
@@ -33,14 +32,20 @@ jobs:
       - run:
           name: Add docker images to cache
           command: |
-            docker save -o docker-cache/member-image.tar eu.gcr.io/crm-ecenter/member-service:latest
-            docker save -o docker-cache/gateway-image.tar eu.gcr.io/crm-ecenter/gateway-service:latest
+            mkdir workspace
+
+            echo "$VERSION" >> workspace/version.txt
+            echo "Building image $VERSION"
+
+            docker save -o docker-cache/member-image.tar eu.gcr.io/crm-ecenter/member-service:${VERSION}
+            docker save -o docker-cache/gateway-image.tar eu.gcr.io/crm-ecenter/gateway-service:${VERSION}
 #            docker save -o docker-cache/commerce-image.tar eu.gcr.io/crm-ecenter/commerce-service:latest
 
       - persist_to_workspace:
           root: .
           paths:
             - docker-cache
+            - version.txt
 
   deploy-dev:
     working_directory: ~/vizulink
@@ -70,8 +75,10 @@ jobs:
       - run:
           name: Push docker images
           command: |
-            docker push eu.gcr.io/crm-ecenter/member-service:latest
-            docker push eu.gcr.io/crm-ecenter/gateway-service:latest
+            export VERSION=`cat version.txt`
+
+            docker push eu.gcr.io/crm-ecenter/member-service:${VERSION}
+            docker push eu.gcr.io/crm-ecenter/gateway-service:${VERSION}
 #            docker push eu.gcr.io/crm-ecenter/commerce-service:latest
       - run:
           name: Set current context
@@ -80,8 +87,10 @@ jobs:
       - run:
           name: Deploy
           command: |
+            export VERSION=`cat version.txt`
+
             for i in .helm/*; do
-              helm upgrade --install ${i##*/} --namespace=backend --set-string image.tag=latest  $i
+              helm upgrade --install ${i##*/} --namespace=backend --set-string image.tag=${VERSION} $i
             done
 
 workflows:
