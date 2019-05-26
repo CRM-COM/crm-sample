@@ -17,9 +17,9 @@ data:
                 allowCredentials: true
                 allowedHeaders: "*"
           routes:
-            - id: member
+            - id: member-service
               uri: http://member-service:9014
               predicates:
                 - Path=/api/member/**
               filters:
-                - StripPrefix=1
+                - RewritePath=/api/(?<member>.*), /$\{member}
