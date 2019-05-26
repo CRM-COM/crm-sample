@@ -38,8 +38,8 @@ dependencies {
     api "org.springframework.data:spring-data-commons"
 
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
-    compile 'org.springframework.cloud:spring-cloud-starter-kubernetes'
-    compile 'org.springframework.cloud:spring-cloud-starter-kubernetes-config'
+//    compile 'org.springframework.cloud:spring-cloud-starter-kubernetes'
+//    compile 'org.springframework.cloud:spring-cloud-starter-kubernetes-config'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
