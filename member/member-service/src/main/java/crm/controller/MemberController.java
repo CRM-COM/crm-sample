@@ -1,9 +1,6 @@
 package crm.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 import crm.model.MemberCreateDto;
@@ -11,15 +8,20 @@ import crm.model.MemberResponseDto;
 import crm.service.MemberOutService;
 
 @RestController
-@RequestMapping
+@RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberOutService memberOutService;
 
-    @PostMapping("/member")
+    @PostMapping
     public MemberResponseDto createMember(@RequestBody MemberCreateDto member) {
         return memberOutService.addMember(member);
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "test";
     }
 
     //POST /member with Body
