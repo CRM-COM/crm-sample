@@ -1,13 +1,13 @@
 package crm.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,6 +26,9 @@ public class Member {
 
     @Column(nullable = false, unique = true, length = 60)
     private String email;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<MemberIdentity> memberIdentities = new HashSet<>();
 
     public Member(String externalId, String name, String email) {
         this.externalId = externalId;

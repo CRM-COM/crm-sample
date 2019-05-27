@@ -1,15 +1,11 @@
 package crm.controller;
 
+import crm.model.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.*;
 
-import crm.model.MemberDto;
-import crm.model.MemberOrganisationCreateDto;
-import crm.model.MemberOrganisationCreateResponse;
 import crm.service.MemberReadService;
 import lombok.RequiredArgsConstructor;
-import crm.model.MemberCreateDto;
-import crm.model.MemberResponseDto;
 import crm.service.MemberOutService;
 
 @RestController
@@ -40,6 +36,11 @@ public class MemberController {
     @GetMapping("/test")
     public String test() {
         return "test";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginDto loginDto) {
+        return memberReadService.login(loginDto);
     }
 
 }

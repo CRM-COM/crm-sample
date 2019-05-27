@@ -33,7 +33,7 @@ public class JwtService {
                     .getBody()
                     .getSubject();
         }
-        throw new IllegalArgumentException("JWT parse failed");
+        return null;
     }
 
     public Authentication parseTokenToAuthentication(HttpServletRequest request) {
@@ -46,16 +46,6 @@ public class JwtService {
                     .getSubject();
             return new AuthenticationUser(externalId);
         }
-        throw new IllegalArgumentException("JWT parse failed");
-    }
-
-    public void createToken(HttpServletResponse response, String externalId) throws IOException {
-        var token = Jwts.builder()
-                .setSubject(externalId)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET)
-                .compact();
-        ;
-        response.getWriter().write(token);
+        return null;
     }
 }
