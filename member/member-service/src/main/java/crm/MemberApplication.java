@@ -6,9 +6,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.stream.annotation.EnableBinding;
 
 import crm.config.MemberStream;
+import crm.config.OrganisationStream;
 
 @SpringBootApplication
-@EnableBinding({MemberStream.class})
+@EnableBinding({MemberStream.class, OrganisationStream.class})
 @EnableConfigurationProperties
 public class MemberApplication {
     public static void main(String[] args) {

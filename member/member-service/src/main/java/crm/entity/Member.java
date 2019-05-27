@@ -27,13 +27,10 @@ public class Member {
     @Column(nullable = false, unique = true, length = 60)
     private String email;
 
-    private String password;
-
-    public Member(String externalId, String name, String email, String password) {
+    public Member(String externalId, String name, String email) {
         this.externalId = externalId;
         this.name = name;
         this.email = email;
-        this.password = password;
     }
 
 }

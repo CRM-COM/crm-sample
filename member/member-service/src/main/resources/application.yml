@@ -17,6 +17,12 @@ spring:
         member-out:
           destination: member
           contentType: application/json
+        organisation-in:
+          destination: organisation
+          contentType: application/json
+        organisation-out:
+          destination: organisation
+          contentType: application/json
 server:
   port: 9014
 

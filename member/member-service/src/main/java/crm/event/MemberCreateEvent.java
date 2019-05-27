@@ -1,5 +1,6 @@
 package crm.event;
 
+import crm.model.IdentityProvider;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +19,8 @@ public class MemberCreateEvent {
   private String email;
 
   private String password;
+
+  private IdentityProvider provider;
+
+  private String cardNumber;
 }
