@@ -23,7 +23,6 @@ jobs:
           name: Determine version
           command: |
             ./gradlew updateVersion versionTxt
-            cp version.txt /circleci/workspace
             cat version.txt
 
       - run:
@@ -33,10 +32,6 @@ jobs:
       - run:
           name: Create docker images
           command: |
-            export VERSION=`echo latest`
-            echo "$VERSION" >> version.txt
-            echo "Building image $VERSION"
-
             ./gradlew docker
       - persist_to_workspace:
           root: .
