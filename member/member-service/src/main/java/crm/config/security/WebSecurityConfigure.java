@@ -10,17 +10,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfigure  extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .authorizeRequests().antMatchers(permitAll()).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+            .csrf().disable()
+            .authorizeRequests().antMatchers(permitAll()).permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -29,12 +29,11 @@ public class WebSecurityConfigure  extends WebSecurityConfigurerAdapter {
     }
 
     protected String[] permitAll() {
-        return new String[0];
+        return new String[]{"/actuator/**"};
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        // Create a default account
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("admin")
                 .password("password")
