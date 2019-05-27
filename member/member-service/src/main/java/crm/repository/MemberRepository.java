@@ -9,4 +9,5 @@ import crm.entity.Member;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
   Optional<Member> findByExternalId(String externalId);
+
 }
