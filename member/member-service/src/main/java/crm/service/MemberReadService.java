@@ -45,8 +45,8 @@ public class MemberReadService {
   }
 
   public String login(LoginDto loginDto) {
-    var member = memberRepository.findByName(loginDto.getUsername())
-            .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND, "Cannot find member with name " + loginDto.getUsername()));
+    var member = memberRepository.findByEmail(loginDto.getEmail())
+            .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND, "Cannot find member with email " + loginDto.getEmail()));
     var password = getPassword(member);
     checkPassword(password, loginDto.getPassword());
 
