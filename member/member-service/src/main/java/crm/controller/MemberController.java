@@ -25,7 +25,7 @@ public class MemberController {
         return memberOutService.addMember(member);
     }
 
-    @PostMapping("/member/{externalId}/organisation")
+    @PostMapping("/{externalId}/organisation")
     public MemberOrganisationCreateResponse createOrganisation(
         @PathVariable("externalId") String externalId,
         @RequestBody MemberOrganisationCreateDto organisationCreateDto) {
