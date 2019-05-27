@@ -12,8 +12,6 @@ jobs:
 
     steps:
       - checkout
-      - attach_workspace:
-          at: /circleci/workspace
       - setup_remote_docker
       - restore_cache:
           keys:
