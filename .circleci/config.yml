@@ -93,7 +93,7 @@ jobs:
       - run:
           name: Deploy
           command: |
-            export VERSION=`cat /circleci/workspace/version.txt`
+            export VERSION=`cat version.txt`
             echo "Version $VERSION"
 
             for i in .helm/*; do
