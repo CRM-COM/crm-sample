@@ -31,7 +31,7 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
     }
 
     protected String[] permitAll() {
-        return new String[]{"/actuator/**"};
+        return new String[]{"/actuator/**", "/member/login"};
     }
 
 }
