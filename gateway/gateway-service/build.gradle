@@ -41,6 +41,8 @@ dependencies {
 //    compile 'org.springframework.cloud:spring-cloud-starter-kubernetes'
 //    compile 'org.springframework.cloud:spring-cloud-starter-kubernetes-config'
 
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-dependencies', version: ${springCloudVersion}, ext: 'pom'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
