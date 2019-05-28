@@ -1,14 +1,15 @@
 package crm.service;
 
-import crm.config.security.JwtService;
 import crm.entity.Member;
 import crm.entity.MemberIdentity;
 import crm.exception.MicroserviceException;
+import crm.model.AuthenticationDto;
 import crm.model.IdentityProvider;
-import crm.model.LoginDto;
 import crm.model.MemberDto;
+import crm.model.Token;
 import crm.repository.MemberIdentityRepository;
 import crm.repository.MemberRepository;
+import crm.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,13 +45,14 @@ public class MemberReadService {
     return new MemberDto(member.getExternalId(), member.getName(), member.getEmail());
   }
 
-  public String login(LoginDto loginDto) {
-    var member = memberRepository.findByEmail(loginDto.getEmail())
-            .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND, "Cannot find member with email " + loginDto.getEmail()));
+  public Token authenticate(AuthenticationDto authDto) {
+    var member = memberRepository.findByEmail(authDto.getEmail())
+            .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND, "Cannot find member with email " + authDto.getEmail()));
     var password = getPassword(member);
-    checkPassword(password, loginDto.getPassword());
+    checkPassword(password, authDto.getPassword());
 
-    return jwtService.createToken(member.getExternalId());
+    var accessToken = jwtService.createToken(member.getExternalId());
+    return Token.builder().accessToken(accessToken).build();
   }
 
   private void checkPassword(String password, String loginPassword) {

@@ -1,22 +1,22 @@
 package crm.service;
 
-import java.util.UUID;
-
+import crm.config.MemberStream;
+import crm.config.OrganisationStream;
+import crm.event.MemberCreateEvent;
+import crm.event.MemberOrganisationCreateEvent;
+import crm.model.MemberCreateDto;
+import crm.model.MemberOrganisationCreateDto;
+import crm.model.MemberOrganisationCreateResponse;
+import crm.model.Token;
+import crm.security.JwtService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
-import crm.config.OrganisationStream;
-import crm.event.MemberOrganisationCreateEvent;
-import crm.model.MemberOrganisationCreateDto;
-import crm.model.MemberOrganisationCreateResponse;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import crm.config.MemberStream;
-import crm.event.MemberCreateEvent;
-import crm.model.MemberCreateDto;
-import crm.model.MemberResponseDto;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +25,9 @@ public class MemberOutService {
 
   private final MemberStream memberStream;
   private final OrganisationStream organisationStream;
+  private final JwtService jwtService;
 
-  public MemberResponseDto addMember(MemberCreateDto member) {
+  public Token addMember(MemberCreateDto member) {
     String externalId = UUID.randomUUID().toString();
     log.info("Sending member create event {}", externalId);
 
@@ -42,7 +43,8 @@ public class MemberOutService {
         .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
         .build());
 
-    return new MemberResponseDto(externalId, member.getName(), member.getEmail());
+    var accessToken = jwtService.createToken(externalId);
+    return Token.builder().accessToken(accessToken).build();
   }
 
   public MemberOrganisationCreateResponse addOrganisation(String memberId,

@@ -1,4 +1,4 @@
-package crm.config.security;
+package crm.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

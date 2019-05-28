@@ -1,11 +1,11 @@
-package crm.config.security;
+package crm.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AccountCredentials {
-    private String username;
+public class AuthenticationDto {
+    private String email;
     private String password;
 }
