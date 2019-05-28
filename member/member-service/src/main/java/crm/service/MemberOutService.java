@@ -50,7 +50,7 @@ public class MemberOutService {
       MemberOrganisationCreateDto organisationCreateDto) {
     String organisationId = UUID.randomUUID().toString();
 
-    log.info("Sending member organisation create event for member with id ", memberId);
+    log.info("Sending member organisation create event for member with id {}", memberId);
 
     var messageChannel = organisationStream.outboundOrganisation();
 
