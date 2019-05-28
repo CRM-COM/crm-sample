@@ -34,6 +34,8 @@ public class MemberIdentity {
 
   private String identValue;
 
+  private String identChallenge;
+
   @ManyToOne
   @JoinColumn
   private Member member;

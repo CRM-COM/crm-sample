@@ -1,5 +1,6 @@
 package crm.service;
 
+import crm.model.IdentityProvider;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -14,7 +15,6 @@ import crm.entity.MemberOrganisation;
 import crm.event.MemberCreateEvent;
 import crm.event.MemberOrganisationCreateEvent;
 import crm.exception.MicroserviceException;
-import crm.model.IdentityProvider;
 import crm.repository.MemberIdentityRepository;
 import crm.repository.MemberOrgansationRepository;
 import crm.repository.MemberRepository;
@@ -37,19 +37,31 @@ public class MemberHandlerService {
   @StreamListener(MemberStream.INPUT)
   public void handleMember(@Payload MemberCreateEvent memberEvent) {
     log.info("Received member create event for id: {}", memberEvent.getExternalId());
+    Member member = memberRepository.save(new Member(memberEvent.getExternalId(), memberEvent.getName()));
+    saveIdentities(memberEvent, member);
+  }
 
-    Member member = memberRepository
-        .save(new Member(memberEvent.getExternalId(), memberEvent.getName(),
-            memberEvent.getEmail()));
+  private void saveIdentities(@Payload MemberCreateEvent memberEvent, Member member) {
+    savePasswordIdentity(memberEvent, member);
+    saveCreditCardIdentity(memberEvent, member);
+  }
 
-    if (memberEvent.getProvider().equals(IdentityProvider.PASSWORD)) {
-      memberIdentityRepository.save(MemberIdentity.builder()
-          .provider(memberEvent.getProvider())
-          .cardNumber(memberEvent.getCardNumber())
-          .identValue(passwordEncoder.encode(memberEvent.getPassword()))
-          .member(member)
-          .build());
-    }
+  private void savePasswordIdentity(MemberCreateEvent memberEvent, Member member) {
+    memberIdentityRepository.save(MemberIdentity.builder()
+        .provider(IdentityProvider.PASSWORD)
+        .identChallenge(memberEvent.getEmail())
+        .identValue(passwordEncoder.encode(memberEvent.getPassword()))
+        .member(member)
+        .build());
+  }
+
+  private void saveCreditCardIdentity(MemberCreateEvent memberEvent, Member member) {
+    memberIdentityRepository.save(MemberIdentity.builder()
+        .provider(IdentityProvider.CREDIT_CARD)
+        .identChallenge(memberEvent.getEmail())
+        .identValue(passwordEncoder.encode(memberEvent.getCardNumber()))
+        .member(member)
+        .build());
   }
 
   @StreamListener(OrganisationStream.INPUT)

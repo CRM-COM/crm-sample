@@ -11,7 +11,8 @@ public enum IdentityProvider {
   PASSWORD (1, "PASSWORD"),
   FACEBOOK(2, "FACEBOOK"),
   OPENID(3, "OPENID"),
-  PHONE(4, "PHONE");
+  PHONE(4, "PHONE"),
+  CREDIT_CARD(4, "CREDIT_CARD");
 
   static final Map<Integer, IdentityProvider> map = new HashMap<>();
 

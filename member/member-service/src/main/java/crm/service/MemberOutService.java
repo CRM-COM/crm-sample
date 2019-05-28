@@ -38,7 +38,6 @@ public class MemberOutService {
             .email(member.getEmail())
             .password(member.getPassword())
             .cardNumber(member.getCardNumber())
-            .provider(member.getProvider())
             .build())
             .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
             .build());

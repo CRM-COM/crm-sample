@@ -24,16 +24,12 @@ public class Member {
 
     private String name;
 
-    @Column(nullable = false, unique = true, length = 60)
-    private String email;
-
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<MemberIdentity> memberIdentities = new HashSet<>();
 
-    public Member(String externalId, String name, String email) {
+    public Member(String externalId, String name) {
         this.externalId = externalId;
         this.name = name;
-        this.email = email;
     }
 
 }

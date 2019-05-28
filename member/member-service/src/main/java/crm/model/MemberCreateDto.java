@@ -15,7 +15,5 @@ public class MemberCreateDto {
 
   private String password;
 
-  private IdentityProvider provider;
-
   private String cardNumber;
 }
