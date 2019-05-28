@@ -34,7 +34,7 @@ public class MemberReadService {
               "Cannot find member with id " + id));
       return toDto(member);
     } catch (IllegalArgumentException e) {
-      MemberIdentity identity = identityRepository.findByCardNumber(idOrCard)
+      MemberIdentity identity = identityRepository.findByIdentValueAndProvider(idOrCard, IdentityProvider.CREDIT_CARD)
           .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND,
               "Cannot find member with card number " + idOrCard));
       return toDto(identity.getMember());
