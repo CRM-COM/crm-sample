@@ -30,8 +30,6 @@ public class MemberIdentity {
   @Enumerated(EnumType.STRING)
   private IdentityProvider provider;
 
-  private String cardNumber;
-
   private String identValue;
 
   private String identChallenge;
