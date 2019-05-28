@@ -1,6 +1,7 @@
 package crm.controller;
 
 import crm.model.*;
+import crm.security.Token;
 import crm.service.MemberOutService;
 import crm.service.MemberReadService;
 import lombok.RequiredArgsConstructor;

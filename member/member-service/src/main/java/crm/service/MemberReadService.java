@@ -6,7 +6,7 @@ import crm.exception.MicroserviceException;
 import crm.model.AuthenticationDto;
 import crm.model.IdentityProvider;
 import crm.model.MemberDto;
-import crm.model.Token;
+import crm.security.Token;
 import crm.repository.MemberIdentityRepository;
 import crm.repository.MemberRepository;
 import crm.security.JwtService;
@@ -51,8 +51,7 @@ public class MemberReadService {
     var password = getPassword(member);
     checkPassword(password, authDto.getPassword());
 
-    var accessToken = jwtService.createToken(member.getExternalId());
-    return Token.builder().accessToken(accessToken).build();
+    return jwtService.createToken(member.getExternalId());
   }
 
   private void checkPassword(String password, String loginPassword) {

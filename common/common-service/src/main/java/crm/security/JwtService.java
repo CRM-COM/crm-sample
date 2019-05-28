@@ -13,14 +13,17 @@ import java.util.Optional;
 public class JwtService {
 
     private static long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 10; // 10 days
-    private static String SECRET = "ThisIsASecret";
 
-    public String createToken(String externalId) {
-        return Jwts.builder()
+    private static String SECRET = "0Il7o4eUuoBdOqk3+Y4xSq5E2lGJFallOcdKRuzR7X/tpvqgJ9ka7QHJi1BreAN1wDgyz9AMV562ipLrpqQVfHzo8B9ce8A6gSjs00tGOSzMUrSuGWzCiAKkqsb3rnWBPEoVTg==";
+
+    public Token createToken(String externalId) {
+        long exp = System.currentTimeMillis() + EXPIRATION_TIME;
+        var accessToken = Jwts.builder()
                 .setSubject(externalId)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .setExpiration(new Date(exp))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
+        return Token.builder().accessToken(accessToken).exp(exp).build();
     }
 
     public String parseToken(HttpServletRequest request) {

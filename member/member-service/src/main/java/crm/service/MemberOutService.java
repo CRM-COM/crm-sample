@@ -7,7 +7,7 @@ import crm.event.MemberOrganisationCreateEvent;
 import crm.model.MemberCreateDto;
 import crm.model.MemberOrganisationCreateDto;
 import crm.model.MemberOrganisationCreateResponse;
-import crm.model.Token;
+import crm.security.Token;
 import crm.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,18 +33,17 @@ public class MemberOutService {
 
     var messageChannel = memberStream.outboundMember();
     messageChannel.send(MessageBuilder.withPayload(MemberCreateEvent.builder()
-        .externalId(externalId)
-        .name(member.getName())
-        .email(member.getEmail())
-        .password(member.getPassword())
-        .cardNumber(member.getCardNumber())
-        .provider(member.getProvider())
-        .build())
-        .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-        .build());
+            .externalId(externalId)
+            .name(member.getName())
+            .email(member.getEmail())
+            .password(member.getPassword())
+            .cardNumber(member.getCardNumber())
+            .provider(member.getProvider())
+            .build())
+            .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+            .build());
 
-    var accessToken = jwtService.createToken(externalId);
-    return Token.builder().accessToken(accessToken).build();
+    return jwtService.createToken(externalId);
   }
 
   public MemberOrganisationCreateResponse addOrganisation(String memberId,

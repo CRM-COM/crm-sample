@@ -1,4 +1,4 @@
-package crm.model;
+package crm.security;
 
 import lombok.*;
 
@@ -10,4 +10,5 @@ import lombok.*;
 public class Token {
     private String accessToken;
     private String refreshToken;
+    private long exp;
 }
