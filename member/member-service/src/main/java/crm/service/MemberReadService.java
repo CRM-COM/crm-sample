@@ -42,28 +42,19 @@ public class MemberReadService {
   }
 
   private MemberDto toDto(Member member) {
-    return new MemberDto(member.getExternalId(), member.getName(), member.getEmail());
+    return new MemberDto(member.getExternalId(), member.getName(), null);
   }
 
   public Token authenticate(AuthenticationDto authDto) {
-    var member = memberRepository.findByEmail(authDto.getEmail())
+    var identity = identityRepository.findByIdentChallengeAndProvider(authDto.getEmail(), IdentityProvider.PASSWORD)
             .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND, "Cannot find member with email " + authDto.getEmail()));
-    var password = getPassword(member);
-    checkPassword(password, authDto.getPassword());
+    checkPassword(identity.getIdentValue(), authDto.getPassword());
 
-    return jwtService.createToken(member.getExternalId());
+    return jwtService.createToken(identity.getMember().getExternalId());
   }
 
   private void checkPassword(String password, String loginPassword) {
     if(!passwordEncoder.matches(loginPassword, password))
       throw new MicroserviceException(HttpStatus.UNAUTHORIZED, "");
-  }
-
-  private String getPassword(Member member) {
-    return member.getMemberIdentities().stream()
-            .filter(identity -> identity.getProvider().equals(IdentityProvider.PASSWORD))
-            .map(MemberIdentity::getIdentValue)
-            .findFirst()
-            .orElse(null);
   }
 }
