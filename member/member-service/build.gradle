@@ -35,6 +35,6 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-        mavenBom "org.keycloak.bom:keycloak-adapter-bom:3.4.1.Final"
+        mavenBom "org.keycloak.bom:keycloak-adapter-bom:4.0.0.Final"
     }
 }
