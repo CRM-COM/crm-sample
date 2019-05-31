@@ -23,6 +23,11 @@ spring:
         organisation-out:
           destination: organisation
           contentType: application/json
+
+
+  main:
+    allow-bean-definition-overriding: true
+
 server:
   port: 9014
 
@@ -35,3 +40,4 @@ keycloak:
   realm: crm-dev
   resource: ogin-app
   public-client: true
+
