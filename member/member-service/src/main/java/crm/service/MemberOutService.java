@@ -34,10 +34,15 @@ public class MemberOutService {
     var messageChannel = memberStream.outboundMember();
     messageChannel.send(MessageBuilder.withPayload(MemberCreateEvent.builder()
             .externalId(externalId)
-            .name(member.getName())
+            .forename(member.getForename())
+            .surname(member.getSurname())
+            .nickname(member.getNickname())
+            .title(member.getTitle())
+            .avatarExternalId(member.getAvatarExternalId())
             .email(member.getEmail())
             .password(member.getPassword())
             .cardNumber(member.getCardNumber())
+            .phoneNumber(member.getPhoneNumber())
             .build())
             .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
             .build());

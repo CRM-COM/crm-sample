@@ -13,11 +13,22 @@ public class MemberCreateEvent {
 
   private String externalId;
 
-  private String name;
+  private String forename;
+
+  private String surname;
+
+  private String nickname;
+
+  private String title;
+
+  private String avatarExternalId;
+
 
   private String email;
 
   private String password;
 
   private String cardNumber;
+
+  private String phoneNumber;
 }

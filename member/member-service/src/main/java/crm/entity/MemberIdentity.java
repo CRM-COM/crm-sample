@@ -1,12 +1,6 @@
 package crm.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import crm.model.IdentityProvider;
 import lombok.AllArgsConstructor;
@@ -27,12 +21,19 @@ public class MemberIdentity {
   @GeneratedValue
   private long id;
 
+  @Column(nullable = false, unique = true, length = 36)
+  private String externalId;
+
   @Enumerated(EnumType.STRING)
-  private IdentityProvider provider;
+  private IdentityProvider identityProvider;
 
   private String identValue;
 
   private String identChallenge;
+
+  private String identAlgorithm;
+
+  private boolean isVerified;
 
   @ManyToOne
   @JoinColumn
