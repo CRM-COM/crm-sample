@@ -9,6 +9,6 @@ import crm.entity.MemberIdentity;
 
 public interface MemberIdentityRepository extends JpaRepository<MemberIdentity, Long> {
 
-  Optional<MemberIdentity> findByIdentValueAndIdentityProvider(String cardNumber, IdentityProvider provider);
-  Optional<MemberIdentity> findByIdentChallengeAndIdentityProvider(String email, IdentityProvider provider);
+  Optional<MemberIdentity> findByIdentValueAndIdentProvider(String cardNumber, IdentityProvider provider);
+  Optional<MemberIdentity> findByIdentChallengeAndIdentProvider(String email, IdentityProvider provider);
 }

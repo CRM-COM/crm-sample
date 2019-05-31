@@ -42,7 +42,7 @@ public class MemberReadService {
               "Cannot find member with id " + id));
       return toDto(member);
     } catch (IllegalArgumentException e) {
-      MemberIdentity identity = identityRepository.findByIdentValueAndIdentityProvider(idOrCard, IdentityProvider.CREDIT_CARD)
+      MemberIdentity identity = identityRepository.findByIdentValueAndIdentProvider(idOrCard, IdentityProvider.CREDIT_CARD)
           .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND,
               "Cannot find member with card number " + idOrCard));
       return toDto(identity.getMember());
@@ -71,7 +71,7 @@ public class MemberReadService {
   }
 
   public Token authenticate(AuthenticationDto authDto) {
-    var identity = identityRepository.findByIdentChallengeAndIdentityProvider(authDto.getEmail(), IdentityProvider.PASSWORD)
+    var identity = identityRepository.findByIdentChallengeAndIdentProvider(authDto.getEmail(), IdentityProvider.PASSWORD)
             .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND, "Cannot find member with email " + authDto.getEmail()));
     checkPassword(identity.getIdentValue(), authDto.getPassword());
 
