@@ -29,3 +29,9 @@ server:
 encryption:
   seed: 84aafbfc73d8184a2d0b8d86b002b13d
   strength: 11
+
+keycloak:
+  auth-server-url: https://keycloak.crmcloudapi.com/auth
+  realm: crm-dev
+  resource: ogin-app
+  public-client: true
