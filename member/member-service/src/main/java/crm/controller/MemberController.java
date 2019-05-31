@@ -42,4 +42,9 @@ public class MemberController {
         return memberReadService.authenticate(loginDto);
     }
 
+    @PostMapping("/auth")
+    public Token auth(@RequestBody AuthenticationDto loginDto) {
+        return memberReadService.auth(loginDto);
+    }
+
 }
