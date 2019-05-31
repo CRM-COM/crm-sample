@@ -35,5 +35,6 @@ keycloak:
   auth-server-url: https://keycloak.crmcloudapi.com/auth
   realm: crm-dev
   resource: crm-dev
-  public-client: true
-
+  ssl-required: external
+  credentials:
+    secret: 08e7e73a-6fb2-41ff-88c9-6178300f7b2a
