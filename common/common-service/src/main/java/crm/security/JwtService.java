@@ -23,7 +23,7 @@ public class JwtService {
                 .setExpiration(new Date(exp))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
-        return Token.builder().accessToken(accessToken).exp(exp).build();
+        return Token.builder().accessToken(accessToken).build();
     }
 
     public String parseToken(HttpServletRequest request) {
