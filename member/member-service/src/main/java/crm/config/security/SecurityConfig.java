@@ -6,9 +6,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 //@Configuration
 //@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigure {
+public class SecurityConfig  {
 
-    @Override
+
     protected String[] permitAll() {
         return new String[]{
                 "/actuator/**",
