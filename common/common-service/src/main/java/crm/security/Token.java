@@ -1,6 +1,9 @@
+
+
+
 package crm.security;
 
-import lombok.*;
+        import lombok.*;
 
 @Getter
 @Setter
@@ -10,7 +13,5 @@ import lombok.*;
 public class Token {
     private String accessToken;
     private String refreshToken;
-    private Long expiresIn;
-    private Long refreshExpiresIn;
-    private String tokenType;
+    private long exp;
 }

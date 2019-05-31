@@ -9,6 +9,7 @@ import crm.model.MemberDto;
 import crm.repository.MemberIdentityRepository;
 import crm.repository.MemberRepository;
 import crm.security.JwtService;
+import crm.security.KeyCloakToken;
 import crm.security.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -53,7 +54,7 @@ public class MemberReadService {
     return new MemberDto(member.getExternalId(), member.getForename(), member.getSurname(), member.getNickname(), member.getTitle());
   }
 
-  public Token auth(AuthenticationDto authDto) {
+  public KeyCloakToken auth(AuthenticationDto authDto) {
     String plainCreds = "crm-dev:08e7e73a-6fb2-41ff-88c9-6178300f7b2a";
     var basicAuth = Base64.getEncoder().encodeToString(plainCreds.getBytes());
     var headers = new HttpHeaders();
@@ -67,7 +68,7 @@ public class MemberReadService {
 
     var request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
-    return restTemplate.postForObject("https://keycloak.crmcloudapi.com/auth/realms/crm-dev/protocol/openid-connect/token", request, Token.class);
+    return restTemplate.postForObject("https://keycloak.crmcloudapi.com/auth/realms/crm-dev/protocol/openid-connect/token", request, KeyCloakToken.class);
   }
 
   public Token authenticate(AuthenticationDto authDto) {
