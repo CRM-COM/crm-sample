@@ -11,8 +11,12 @@ public class MemberDto {
 
   private String externalId;
 
-  private String name;
+  private String forename;
 
-  private String email;
+  private String surname;
+
+  private String nickname;
+
+  private String title;
 
 }

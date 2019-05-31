@@ -50,7 +50,7 @@ public class MemberReadService {
   }
 
   private MemberDto toDto(Member member) {
-    return new MemberDto(member.getExternalId(), member.getName(), null);
+    return new MemberDto(member.getExternalId(), member.getForename(), member.getSurname(), member.getNickname(), member.getTitle());
   }
 
   public Token auth(AuthenticationDto authDto) {
