@@ -33,7 +33,7 @@ public class MemberController {
       return memberReadService.getMemberByIdOrCard(idOrCard);
     }
 
-    @GetMapping("/member")
+    @GetMapping
     public MemberDto getMember(@RequestHeader("Authorization") String token) {
         return memberReadService.getMember(token);
     }
