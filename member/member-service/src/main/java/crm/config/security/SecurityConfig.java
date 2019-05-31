@@ -71,12 +71,19 @@ package crm.config.security;
 public class SecurityConfig extends WebSecurityConfigure {
 
     @Override
-    protected String[] permitAll() {
+    protected String[] permitAllPost() {
         return new String[]{
                 "/actuator/**",
                 "/member/authenticate",
                 "/member/auth",
                 "/member"
+        };
+    }
+
+    @Override
+    protected String[] permitAllGet() {
+        return new String[]{
+                "/actuator/**"
         };
     }
 }

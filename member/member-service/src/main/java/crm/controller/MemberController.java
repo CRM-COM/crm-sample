@@ -33,6 +33,11 @@ public class MemberController {
       return memberReadService.getMemberByIdOrCard(idOrCard);
     }
 
+    @GetMapping("/member")
+    public MemberDto getMember(@RequestHeader("Authorization") String token) {
+        return memberReadService.getMember(token);
+    }
+
     @GetMapping("/test")
     public String test() {
         return "test";

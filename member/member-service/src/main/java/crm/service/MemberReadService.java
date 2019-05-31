@@ -83,4 +83,11 @@ public class MemberReadService {
     if(!passwordEncoder.matches(loginPassword, password))
       throw new MicroserviceException(HttpStatus.UNAUTHORIZED, "");
   }
+
+  public MemberDto getMember(String token) {
+    var memberExternalId = jwtService.parseToken(token);
+    return memberRepository.findByExternalId(memberExternalId)
+            .map(this::toDto)
+            .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND, "Cannot find member"));
+  }
 }

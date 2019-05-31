@@ -36,7 +36,7 @@ public class JwtService {
         return Optional.ofNullable(parseToken(token)).map(AuthenticationUser::new).orElse(null);
     }
 
-    private String parseToken(String token) {
+    public String parseToken(String token) {
         if (token == null || !token.startsWith("Bearer "))
             return null;
 

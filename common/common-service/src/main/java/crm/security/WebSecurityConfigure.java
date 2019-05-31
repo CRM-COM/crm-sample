@@ -1,5 +1,6 @@
 package crm.security;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,7 +14,8 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(permitAll()).permitAll()
+                .antMatchers(HttpMethod.POST, permitAllPost()).permitAll()
+                .antMatchers(HttpMethod.GET, permitAllGet()).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -21,10 +23,16 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(permitAll());
+        web.ignoring()
+                .antMatchers(HttpMethod.POST, permitAllPost())
+                .antMatchers(HttpMethod.GET, permitAllGet());
     }
 
-    protected String[] permitAll() {
+    protected String[] permitAllPost() {
+        return new String[0];
+    }
+
+    protected String[] permitAllGet() {
         return new String[0];
     }
 
