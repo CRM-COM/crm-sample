@@ -19,7 +19,8 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @Configuration
 @ComponentScan(
         basePackageClasses = KeycloakSecurityComponents.class,
-        excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "org.keycloak.adapters.springsecurity.management.HttpSessionManager"))
+        excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX,
+                pattern = "org.keycloak.adapters.springsecurity.management.HttpSessionManager"))
 @EnableWebSecurity
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
