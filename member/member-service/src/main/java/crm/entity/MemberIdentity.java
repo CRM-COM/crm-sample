@@ -25,7 +25,7 @@ public class MemberIdentity {
   private String externalId;
 
   @Enumerated(EnumType.STRING)
-  private IdentityProvider identityProvider;
+  private IdentityProvider identProvider;
 
   private String identValue;
 

@@ -50,7 +50,7 @@ public class MemberHandlerService {
 
   private void savePasswordIdentity(MemberCreateEvent memberEvent, Member member) {
     memberIdentityRepository.save(MemberIdentity.builder()
-        .identityProvider(IdentityProvider.PASSWORD)
+        .identProvider(IdentityProvider.PASSWORD)
         .identChallenge(memberEvent.getEmail())
         .identValue(passwordEncoder.encode(memberEvent.getPassword()))
         .member(member)
@@ -59,7 +59,7 @@ public class MemberHandlerService {
 
   private void saveCreditCardIdentity(MemberCreateEvent memberEvent, Member member) {
     memberIdentityRepository.save(MemberIdentity.builder()
-        .identityProvider(IdentityProvider.CREDIT_CARD)
+        .identProvider(IdentityProvider.CREDIT_CARD)
         .identChallenge(memberEvent.getEmail())
         .identValue(passwordEncoder.encode(memberEvent.getCardNumber()))
         .member(member)
@@ -68,7 +68,7 @@ public class MemberHandlerService {
 
   private void savePhoneIdentity(MemberCreateEvent memberEvent, Member member) {
     memberIdentityRepository.save(MemberIdentity.builder()
-        .identityProvider(IdentityProvider.PHONE)
+        .identProvider(IdentityProvider.PHONE)
         .identChallenge(memberEvent.getEmail())
         .identValue(memberEvent.getPhoneNumber())
         .member(member)
