@@ -6,6 +6,7 @@ import crm.service.KeycloakService;
 import crm.service.MemberOutService;
 import crm.service.MemberReadService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,8 +36,8 @@ public class MemberController {
     }
 
     @GetMapping
-    public MemberDto getMember(@RequestHeader("Authorization") String token) {
-        return memberReadService.getMember(token);
+    public MemberDto getMember() {
+        return memberReadService.getMember();
     }
 
     @GetMapping("/test")

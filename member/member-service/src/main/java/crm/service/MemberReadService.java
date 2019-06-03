@@ -11,7 +11,9 @@ import crm.repository.MemberRepository;
 import crm.security.JwtService;
 import crm.security.Token;
 import lombok.RequiredArgsConstructor;
+import org.keycloak.KeycloakPrincipal;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,9 +60,9 @@ public class MemberReadService {
       throw new MicroserviceException(HttpStatus.UNAUTHORIZED, "");
   }
 
-  public MemberDto getMember(String token) {
-    var memberExternalId = jwtService.parseToken(token);
-    return memberRepository.findByExternalId(memberExternalId)
+  public MemberDto getMember() {
+    String externalId = ((KeycloakPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getName();
+    return memberRepository.findByExternalId(externalId)
             .map(this::toDto)
             .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND, "Cannot find member"));
   }
