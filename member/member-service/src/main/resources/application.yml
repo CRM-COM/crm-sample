@@ -23,10 +23,6 @@ spring:
 server:
   port: 9014
 
-keycloak:
-  clientId: crm-dev
-  clientSecret: ${KEYCLOAK_CLIENT_SECRET}
-
 encryption:
   seed: 84aafbfc73d8184a2d0b8d86b002b13d
   strength: 11
@@ -39,3 +35,5 @@ keycloak:
   resource: crm-dev
   public-client: true
   realm-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkRXvgsZDRmPwsAZfeb+DszgCTR5kt2vTC3KhHntRWg1jq6miMF/VGdZRLe76/Q1xSN9+X/LBGg3WazkPyLtcmvmKqiYIZdveszJj3fbBmy79x+QqosLq+QR/EJY+F6PLEIRwKsaqi9rWs4m1TfyAwykDx7QxVvwKet7RkQO2+XJ6XCSSREaxElH8sDT0W0h09E+H7Np9mXLvnAy0XyKMaM7dCBZ25UEyuccHE73vtnn6XCfwpgqaQddhF9zszJIvsgi8MKarR+19KffeAZfCNM1x/MdYUGnPrIYCfDuLErKOZA5ZyrdBhNIkUahx4a/wToZ2kjO1SV647NHD0iE69QIDAQAB
+  clientId: crm-dev
+  clientSecret: ${KEYCLOAK_CLIENT_SECRET}
