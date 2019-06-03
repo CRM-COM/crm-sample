@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import crm.exception.MicroserviceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;

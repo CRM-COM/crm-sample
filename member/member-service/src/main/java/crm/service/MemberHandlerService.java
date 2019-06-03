@@ -7,6 +7,7 @@ import crm.entity.MemberIdentity;
 import crm.entity.MemberOrganisation;
 import crm.event.MemberCreateEvent;
 import crm.event.MemberOrganisationCreateEvent;
+import crm.exception.MicroserviceException;
 import crm.model.IdentityProvider;
 import crm.repository.MemberIdentityRepository;
 import crm.repository.MemberOrgansationRepository;
