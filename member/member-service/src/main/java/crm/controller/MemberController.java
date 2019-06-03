@@ -2,7 +2,6 @@ package crm.controller;
 
 import crm.model.*;
 import crm.security.CrmKeycloakToken;
-import crm.security.Token;
 import crm.service.KeycloakService;
 import crm.service.MemberOutService;
 import crm.service.MemberReadService;
@@ -46,12 +45,7 @@ public class MemberController {
     }
 
     @PostMapping("/authenticate")
-    public Token authenticate(@RequestBody AuthenticationDto loginDto) {
-        return memberReadService.authenticate(loginDto);
-    }
-
-    @PostMapping("/auth")
-    public CrmKeycloakToken auth(@RequestBody AuthenticationDto loginDto) {
+    public CrmKeycloakToken authenticate(@RequestBody AuthenticationDto loginDto) {
         return keycloakService.auth(loginDto);
     }
 
