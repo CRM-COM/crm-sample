@@ -1,9 +1,8 @@
 package crm.exception;
 
-import org.springframework.http.HttpStatus;
-
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.http.HttpStatus;
 
 @Getter
 @ToString
@@ -13,11 +12,21 @@ public class MicroserviceException extends RuntimeException {
 
   private String errorDescription;
 
+  private String response;
+
   public MicroserviceException(HttpStatus errorCode, String errorDescription) {
     super(errorDescription);
 
     this.errorCode = errorCode;
     this.errorDescription = errorDescription;
+  }
+
+  public MicroserviceException(HttpStatus errorCode, String errorDescription, String response) {
+    super(errorDescription);
+
+    this.errorCode = errorCode;
+    this.errorDescription = errorDescription;
+    this.response = response;
   }
 
   public MicroserviceException(String errorDescription) {

@@ -1,15 +1,18 @@
 package crm.exception;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import lombok.Getter;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 public class RestMicroserviceException {
 
     private HttpStatus errorCode;
 
     private String errorDescription;
+
+    private String response;
 
     public RestMicroserviceException(HttpStatus errorCode, String errorDescription) {
         this.errorCode = errorCode;
@@ -19,5 +22,6 @@ public class RestMicroserviceException {
     public RestMicroserviceException(MicroserviceException ex) {
         this.errorCode = ex.getErrorCode();
         this.errorDescription = ex.getErrorDescription();
+        this.response = ex.getResponse();
     }
 }

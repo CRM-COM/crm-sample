@@ -41,7 +41,7 @@ public class KeycloakService {
     }
 
     private void getCheckResponse(Response response) {
-        if(response.getStatus() != 200)
+        if(response.getStatus() != 201)
             throw new MicroserviceException(HttpStatus.valueOf(response.getStatus()), null);
     }
 

@@ -2,7 +2,6 @@ package crm.service;
 
 import crm.entity.Member;
 import crm.entity.MemberIdentity;
-import crm.exception.MicroserviceException;
 import crm.model.AuthenticationDto;
 import crm.model.IdentityProvider;
 import crm.model.MemberDto;
