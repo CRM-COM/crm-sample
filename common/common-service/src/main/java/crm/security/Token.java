@@ -1,9 +1,6 @@
-
-
-
 package crm.security;
 
-        import lombok.*;
+import lombok.*;
 
 @Getter
 @Setter

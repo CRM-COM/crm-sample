@@ -1,12 +1,11 @@
 package crm.controller;
 
 import crm.model.*;
-import crm.security.CrmKeycloakToken;
+import crm.security.Token;
 import crm.service.KeycloakService;
 import crm.service.MemberOutService;
 import crm.service.MemberReadService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,8 +18,8 @@ public class MemberController {
     private final KeycloakService keycloakService;
 
     @PostMapping
-    public void createMember(@RequestBody MemberCreateDto member) {
-        memberOutService.addMember(member);
+    public Token createMember(@RequestBody MemberCreateDto member) {
+        return memberOutService.addMember(member);
     }
 
     @PostMapping("/{externalId}/organisation")
@@ -46,8 +45,8 @@ public class MemberController {
     }
 
     @PostMapping("/authenticate")
-    public CrmKeycloakToken authenticate(@RequestBody AuthenticationDto loginDto) {
-        return keycloakService.auth(loginDto);
+    public Token authenticate(@RequestBody AuthenticationDto loginDto) {
+        return memberReadService.authenticate(loginDto);
     }
 
 }

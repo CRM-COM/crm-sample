@@ -3,7 +3,6 @@ package crm.service;
 import crm.config.KeycloakConfig;
 import crm.event.MemberCreateEvent;
 import crm.model.AuthenticationDto;
-import crm.security.CrmKeycloakToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.OAuth2Constants;

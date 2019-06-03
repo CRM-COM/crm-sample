@@ -16,7 +16,7 @@ public class KeycloakServiceTest {
 //        member.setForename("forename");
 //        member.setSurname("surname");
 //        member.setNickname("nickname");
-//        member.setEmail("test@email.com");
+//        member.setUsername("test@username.com");
 //        new KeycloakService(new RestTemplate()).createKeycloakUser(member);
 //    }
 }
