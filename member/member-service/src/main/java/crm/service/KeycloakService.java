@@ -72,6 +72,7 @@ public class KeycloakService {
         user.setAttributes(attributes);
         user.setCredentials(Collections.singletonList(createCrdential(member)));
         user.setId(UUID.randomUUID().toString());
+        user.setEnabled(true);
 
         return user;
     }
