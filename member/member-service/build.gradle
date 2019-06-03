@@ -27,6 +27,12 @@ dependencies {
     api 'io.springfox:springfox-swagger-ui:2.9.2'
 
     api 'org.keycloak:keycloak-spring-boot-2-starter:4.0.0.Final'
+    api 'org.keycloak:keycloak-admin-client:4.0.0.Final'
+
+    api 'javax.ws.rs:javax.ws.rs-api:2.0'
+    api 'org.jboss.resteasy:resteasy-client:3.1.4.Final'
+    api 'org.jboss.resteasy:resteasy-jackson2-provider:3.1.4.Final'
+    api 'org.jboss.resteasy:resteasy-jaxrs:3.1.4.Final'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'junit:junit'

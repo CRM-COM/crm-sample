@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class KeyCloakToken {
+public class CrmKeycloakToken {
     @JsonProperty("access_token")
     private String accessToken;
     @JsonProperty("refresh_token")

@@ -76,7 +76,8 @@ public class SecurityConfig extends WebSecurityConfigure {
                 "/actuator/**",
                 "/member/authenticate",
                 "/member/auth",
-                "/member"
+                "/member",
+                "/member/k"
         };
     }
 
