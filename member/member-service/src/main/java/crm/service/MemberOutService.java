@@ -7,8 +7,6 @@ import crm.event.MemberOrganisationCreateEvent;
 import crm.model.MemberCreateDto;
 import crm.model.MemberOrganisationCreateDto;
 import crm.model.MemberOrganisationCreateResponse;
-import crm.security.Token;
-import crm.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.MessageHeaders;
@@ -25,15 +23,13 @@ public class MemberOutService {
 
   private final MemberStream memberStream;
   private final OrganisationStream organisationStream;
-  private final JwtService jwtService;
 
-  public Token addMember(MemberCreateDto member) {
+  public void addMember(MemberCreateDto member) {
     String externalId = UUID.randomUUID().toString();
     log.info("Sending member create event {}", externalId);
 
     var messageChannel = memberStream.outboundMember();
     messageChannel.send(MessageBuilder.withPayload(MemberCreateEvent.builder()
-            .externalId(externalId)
             .forename(member.getForename())
             .surname(member.getSurname())
             .nickname(member.getNickname())
@@ -46,8 +42,6 @@ public class MemberOutService {
             .build())
             .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
             .build());
-
-    return jwtService.createToken(externalId);
   }
 
   public MemberOrganisationCreateResponse addOrganisation(String memberId,

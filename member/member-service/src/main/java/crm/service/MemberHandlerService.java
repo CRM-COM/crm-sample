@@ -33,10 +33,13 @@ public class MemberHandlerService {
 
   private final BCryptPasswordEncoder passwordEncoder;
 
+  private final KeycloakService keycloakService;
+
   @StreamListener(MemberStream.INPUT)
   public void handleMember(@Payload MemberCreateEvent memberEvent) {
-    log.info("Received member create event for id: {}", memberEvent.getExternalId());
-    Member member = memberRepository.save(new Member(memberEvent.getExternalId(), memberEvent.getTitle(),
+    log.info("Received member create event for id: {}", memberEvent);
+    var externalId = keycloakService.createKeycloakUser(memberEvent);
+    Member member = memberRepository.save(new Member(externalId, memberEvent.getTitle(),
             memberEvent.getForename(), memberEvent.getSurname(), memberEvent.getNickname(),
             memberEvent.getAvatarExternalId(), false));
     saveIdentities(memberEvent, member);

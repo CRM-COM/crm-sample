@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MemberCreateEvent {
 
-  private String externalId;
-
   private String forename;
 
   private String surname;

@@ -1,5 +1,6 @@
 package crm.service;
 
+import crm.event.MemberCreateEvent;
 import crm.exception.MicroserviceException;
 import crm.model.AuthenticationDto;
 import crm.model.MemberCreateDto;
@@ -30,14 +31,14 @@ public class KeycloakService {
 
     private final RestTemplate restTemplate;
 
-    public void createKeycloakUser(MemberCreateDto member) {
+    public String createKeycloakUser(MemberCreateEvent member) {
         var user = createUser(member);
         String realm = "crm-dev";
         var keycloak = createKeycloak(realm);
         var realmResource = keycloak.realm(realm);
         var userResource = realmResource.users();
         var response = userResource.create(user);
-        getCheckResponse(response);
+        return getUserId(response);
     }
 
     private void getCheckResponse(Response response) {
@@ -61,7 +62,7 @@ public class KeycloakService {
         return response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
     }
 
-    private UserRepresentation createUser(MemberCreateDto member) {
+    private UserRepresentation createUser(MemberCreateEvent member) {
         var user = new UserRepresentation();
         user.setFirstName(member.getForename());
         user.setLastName(member.getSurname());
@@ -77,7 +78,7 @@ public class KeycloakService {
         return user;
     }
 
-    private CredentialRepresentation createCrdential(MemberCreateDto member) {
+    private CredentialRepresentation createCrdential(MemberCreateEvent member) {
         var credential = new CredentialRepresentation();
         credential.setTemporary(false);
         credential.setType(CredentialRepresentation.PASSWORD);

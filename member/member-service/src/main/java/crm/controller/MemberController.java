@@ -19,13 +19,8 @@ public class MemberController {
     private final KeycloakService keycloakService;
 
     @PostMapping
-    public Token createMember(@RequestBody MemberCreateDto member) {
-        return memberOutService.addMember(member);
-    }
-
-    @PostMapping("/k")
-    public void createMemberK(@RequestBody MemberCreateDto member) {
-        keycloakService.createKeycloakUser(member);
+    public void createMember(@RequestBody MemberCreateDto member) {
+        memberOutService.addMember(member);
     }
 
     @PostMapping("/{externalId}/organisation")
