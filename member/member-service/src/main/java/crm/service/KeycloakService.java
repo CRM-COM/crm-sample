@@ -52,8 +52,8 @@ public class KeycloakService {
                 .grantType(OAuth2Constants.PASSWORD)
                 .clientId(config.getClientId())
                 .clientSecret(config.getClientSecret())
-                .username("admin")
-                .password("password123")
+                .username(config.getUsername())
+                .password(config.getPassword())
                 .build();
     }
 

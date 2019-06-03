@@ -20,4 +20,8 @@ public class KeycloakConfig {
 
     private String realm;
 
+    private String username;
+
+    private String password;
+
 }

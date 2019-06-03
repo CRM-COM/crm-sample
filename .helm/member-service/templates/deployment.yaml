@@ -67,6 +67,16 @@ spec:
               secretKeyRef:
                 key: clientSecret
                 name: keycloak
+          - name: KEYCLOAK_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: keycloak
+          - name: KEYCLOAK_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: keycloak
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: /var/run/secrets-gcp/serviceaccount.json
           {{- end }}
