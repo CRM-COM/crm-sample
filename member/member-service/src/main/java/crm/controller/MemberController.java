@@ -2,7 +2,6 @@ package crm.controller;
 
 import crm.model.*;
 import crm.security.Token;
-import crm.service.KeycloakService;
 import crm.service.MemberOutService;
 import crm.service.MemberReadService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ public class MemberController {
 
     private final MemberOutService memberOutService;
     private final MemberReadService memberReadService;
-    private final KeycloakService keycloakService;
 
     @PostMapping
     public Token createMember(@RequestBody MemberCreateDto member) {
@@ -35,8 +33,8 @@ public class MemberController {
     }
 
     @GetMapping
-    public MemberDto getMember() {
-        return memberReadService.getMember();
+    public MemberDto getMember(@RequestHeader("Authorization") String token) {
+        return memberReadService.getMember(token);
     }
 
     @GetMapping("/test")
