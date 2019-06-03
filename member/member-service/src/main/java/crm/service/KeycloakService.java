@@ -94,7 +94,7 @@ public class KeycloakService {
 
     private LinkedMultiValueMap<String, String> getBody(AuthenticationDto authDto) {
         var map = new LinkedMultiValueMap<String, String>();
-        map.add("username", authDto.getEmail());
+        map.add("username", authDto.getUsername());
         map.add("password", authDto.getPassword());
         map.add("grant_type", "password");
         return map;
