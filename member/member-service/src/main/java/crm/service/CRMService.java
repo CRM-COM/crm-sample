@@ -159,6 +159,7 @@ public class CRMService {
         .firstName(event.getForename())
         .lastName(event.getSurname())
         .demographics(CRMMemberDemographics.builder()
+            .idNumber(event.getExternalId())
             .dateOfBirth(getBirthday(event.getBirthday()))
             .phones(Arrays.asList(new CRMMemberPhone("MOBILE", event.getPhoneNumber())))
             .emails(Arrays.asList(new CRMMemberEmail("PERSONAL", event.getEmail())))
