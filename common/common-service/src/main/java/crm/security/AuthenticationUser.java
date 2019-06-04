@@ -7,10 +7,10 @@ import java.util.Collection;
 
 public class AuthenticationUser implements Authentication {
 
-    private String externalId;
+    private DecodedToken decodedToken;
 
-    public AuthenticationUser(String externalId) {
-        this.externalId = externalId;
+    public AuthenticationUser(DecodedToken decodedToken) {
+        this.decodedToken = decodedToken;
     }
 
     @Override
@@ -45,6 +45,6 @@ public class AuthenticationUser implements Authentication {
 
     @Override
     public String getName() {
-        return externalId;
+        return decodedToken.getExternalId();
     }
 }

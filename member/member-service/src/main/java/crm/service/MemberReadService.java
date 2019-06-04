@@ -49,8 +49,8 @@ public class MemberReadService {
   }
 
   public MemberDto getMember(String token) {
-    var memberExternalId = jwtService.parseToken(token);
-    return memberRepository.findByExternalId(memberExternalId)
+    var decoded = jwtService.parseToken(token);
+    return memberRepository.findByExternalId(decoded.getExternalId())
             .map(this::toDto)
             .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND, "Cannot find member"));
   }
@@ -59,7 +59,7 @@ public class MemberReadService {
     var token = keycloakService.auth(authDto);
     var decodedToken = jwtService.decodeKeycloakToken(token.getAccessToken());
 
-    return jwtService.createToken(decodedToken.getExternalId());
+    return jwtService.createToken(decodedToken.getExternalId(), decodedToken.getKeycloakExternalId());
   }
 
 }

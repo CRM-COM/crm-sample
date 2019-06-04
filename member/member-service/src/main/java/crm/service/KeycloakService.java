@@ -64,6 +64,7 @@ public class KeycloakService {
         user.setEmail(member.getEmail());
         var attributes = new HashMap<String, List<String>>();
         attributes.put("phoneNumber", Collections.singletonList(member.getPhoneNumber()));
+        attributes.put("externalId", Collections.singletonList(member.getExternalId()));
         user.setAttributes(attributes);
         user.setCredentials(Collections.singletonList(createCrdential(member)));
         user.setId(member.getExternalId());

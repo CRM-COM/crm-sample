@@ -47,7 +47,7 @@ public class MemberOutService {
             .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
             .build());
 
-    return jwtService.createToken(externalId);
+    return jwtService.createToken(externalId, null);
   }
 
   public MemberOrganisationCreateResponse addOrganisation(String memberId,
