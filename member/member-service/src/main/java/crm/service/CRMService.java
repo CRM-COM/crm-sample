@@ -96,7 +96,7 @@ public class CRMService {
   public CRMAuthenticateResponse authenticate() {
     CRMAuthenticateRequest request = new CRMAuthenticateRequest(crmConfig.getUsername(),
         crmConfig.getPassword(), crmConfig.getOrganisation());
-    String url = crmConfig.getUrl() + "/authentication/web_api_key/token";
+    String url = crmConfig.getUrl() + "/authentication/token";
     CRMAuthenticateResponse response = commonPostRequest(url, request,
         CRMAuthenticateResponse.class);
     return response;
