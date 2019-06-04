@@ -16,10 +16,7 @@ public class CRMConfig {
     @Value("${crm.url}")
     private String url;
 
-//    @Value("${crm.key}")
-//    private String key;
-
-    @Value("${crm.refreshTokenActive}")
+    @Value("${crm.refreshTokenActive:true}")
     private boolean refreshTokenActive;
 
     @Value("${crm.username}")
