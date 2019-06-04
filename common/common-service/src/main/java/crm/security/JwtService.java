@@ -1,16 +1,22 @@
 package crm.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import crm.exception.MicroserviceException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class JwtService {
 
@@ -50,9 +56,14 @@ public class JwtService {
                 .getSubject();
     }
 
-    public String decode(String JWTEncoded) {
+    public DecodedToken decodeKeycloakToken(String JWTEncoded) {
         var split = JWTEncoded.split("\\.");
-        return getJson(split[1]);
+        try {
+            return new ObjectMapper().readValue(getJson(split[1]), DecodedToken.class);
+        } catch (IOException e) {
+            log.info("Error on decoding keycloak jwt", e);
+            throw new MicroserviceException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 
     private static String getJson(String strEncoded) {

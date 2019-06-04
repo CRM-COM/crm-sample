@@ -57,16 +57,9 @@ public class MemberReadService {
 
   public Token authenticate(AuthenticationDto authDto) {
     var token = keycloakService.auth(authDto);
-    jwtService.decode(token.getAccessToken());
-    String externalId = memberRepository.findByNickname(authDto.getUsername())
-            .map(Member::getExternalId)
-            .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND, "Cannot find member"));
+    var decodedToken = jwtService.decodeKeycloakToken(token.getAccessToken());
 
-    return jwtService.createToken(externalId);
+    return jwtService.createToken(decodedToken.getExternalId());
   }
 
-  private void checkPassword(String password, String loginPassword) {
-    if(!passwordEncoder.matches(loginPassword, password))
-      throw new MicroserviceException(HttpStatus.UNAUTHORIZED, "");
-  }
 }
