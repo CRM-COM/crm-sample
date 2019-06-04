@@ -6,6 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Optional;
 
@@ -46,5 +48,15 @@ public class JwtService {
                 .parseClaimsJws(trimmedToken)
                 .getBody()
                 .getSubject();
+    }
+
+    public String decode(String JWTEncoded) {
+        var split = JWTEncoded.split("\\.");
+        return getJson(split[1]);
+    }
+
+    private static String getJson(String strEncoded) {
+        byte[] decodedBytes = Base64.getDecoder().decode(strEncoded);
+        return new String(decodedBytes, StandardCharsets.UTF_8);
     }
 }

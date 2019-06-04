@@ -3,6 +3,7 @@ package crm.service;
 import crm.config.KeycloakConfig;
 import crm.event.MemberCreateEvent;
 import crm.model.AuthenticationDto;
+import crm.security.CrmKeycloakToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.OAuth2Constants;
@@ -84,11 +85,11 @@ public class KeycloakService {
         return credential;
     }
 
-    public String auth(AuthenticationDto authDto) {
+    public CrmKeycloakToken auth(AuthenticationDto authDto) {
         var headers = getHeaders();
         var map = getBody(authDto);
         var request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-        return restTemplate.postForObject(KEYCLOAK_URL + GET_TOKEN_URL, request, String.class);
+        return restTemplate.postForObject(KEYCLOAK_URL + GET_TOKEN_URL, request, CrmKeycloakToken.class);
     }
 
     private LinkedMultiValueMap<String, String> getBody(AuthenticationDto authDto) {

@@ -56,7 +56,8 @@ public class MemberReadService {
   }
 
   public Token authenticate(AuthenticationDto authDto) {
-    keycloakService.auth(authDto);
+    var token = keycloakService.auth(authDto);
+    jwtService.decode(token.getAccessToken());
     String externalId = memberRepository.findByNickname(authDto.getUsername())
             .map(Member::getExternalId)
             .orElseThrow(() -> new MicroserviceException(HttpStatus.NOT_FOUND, "Cannot find member"));
