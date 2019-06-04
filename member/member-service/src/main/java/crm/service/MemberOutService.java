@@ -39,6 +39,7 @@ public class MemberOutService {
             .nickname(member.getNickname())
             .title(member.getTitle())
             .avatarExternalId(member.getAvatarExternalId())
+            .birthday(member.getBirthday())
             .email(member.getEmail())
             .password(member.getPassword())
             .cardNumber(member.getCardNumber())

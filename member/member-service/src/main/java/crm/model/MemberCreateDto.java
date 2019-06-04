@@ -1,5 +1,7 @@
 package crm.model;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +21,7 @@ public class MemberCreateDto {
 
   private String avatarExternalId;
 
+  private Date birthday;
 
   private String email;
 

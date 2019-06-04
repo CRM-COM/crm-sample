@@ -1,5 +1,7 @@
 package crm.event;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +25,7 @@ public class MemberCreateEvent {
 
   private String avatarExternalId;
 
+  private Date birthday;
 
   private String email;
 

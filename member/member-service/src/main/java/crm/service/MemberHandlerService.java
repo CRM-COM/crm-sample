@@ -1,5 +1,6 @@
 package crm.service;
 
+import crm.config.MemberCRMStream;
 import crm.config.MemberStream;
 import crm.config.OrganisationStream;
 import crm.entity.Member;
@@ -16,9 +17,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MimeTypeUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +39,8 @@ public class MemberHandlerService {
 
   private final KeycloakService keycloakService;
 
+  private final MemberCRMStream memberCRMStream;
+
   @StreamListener(MemberStream.INPUT)
   public void handleMember(@Payload MemberCreateEvent memberEvent) {
     log.info("Received member create event for id: {}", memberEvent);
@@ -43,9 +49,14 @@ public class MemberHandlerService {
             memberEvent.getForename(), memberEvent.getSurname(), memberEvent.getNickname(),
             memberEvent.getAvatarExternalId(), false));
     saveIdentities(memberEvent, member);
+
+    var messageChannel = memberCRMStream.outboundMember();
+    messageChannel.send(MessageBuilder.withPayload(memberEvent)
+        .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+        .build());
   }
 
-  private void saveIdentities(@Payload MemberCreateEvent memberEvent, Member member) {
+  private void saveIdentities(MemberCreateEvent memberEvent, Member member) {
     savePasswordIdentity(memberEvent, member);
     saveCreditCardIdentity(memberEvent, member);
     savePhoneIdentity(memberEvent, member);

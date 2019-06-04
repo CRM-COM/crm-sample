@@ -13,6 +13,12 @@ spring:
         member-out:
           destination: member
           contentType: application/json
+        member-crm-in:
+          destination: member-crm
+          contentType: application/json
+        member-crm-out:
+          destination: member-crm
+          contentType: application/json
         organisation-in:
           destination: organisation
           contentType: application/json
@@ -39,3 +45,9 @@ keycloak:
   clientSecret: ${KEYCLOAK_CLIENT_SECRET}
   username: ${KEYCLOAK_USERNAME}
   password: ${KEYCLOAK_PASSWORD}
+
+crm:
+  url: https://qa2.crm.com/crmapi/rest/v2
+  username: ${CRM_USERNAME}
+  password: ${CRM_PASSWORD}
+  organisation: ${CRM_ORGANISATION}

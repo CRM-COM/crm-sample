@@ -77,6 +77,21 @@ spec:
               secretKeyRef:
                 key: password
                 name: keycloak
+          - name: CRM_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: crm
+          - name: CRM_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: crm
+          - name: CRM_ORGANISATION
+            valueFrom:
+              secretKeyRef:
+                key: organisation
+                name: crm
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: /var/run/secrets-gcp/serviceaccount.json
           {{- end }}
