@@ -33,11 +33,10 @@ public class KeycloakService {
     private final RestTemplate restTemplate;
     private final KeycloakConfig config;
 
-    String createKeycloakUser(MemberCreateEvent member) {
+    void createKeycloakUser(MemberCreateEvent member) {
         var user = createUser(member);
         var response = createKeycloak().realm(config.getRealm()).users().create(user);
         checkResponse(response);
-        return getUserId(response);
     }
 
     private void checkResponse(Response response) {
@@ -57,10 +56,6 @@ public class KeycloakService {
                 .build();
     }
 
-    private String getUserId(Response response) {
-        return response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
-    }
-
     private UserRepresentation createUser(MemberCreateEvent member) {
         var user = new UserRepresentation();
         user.setFirstName(member.getForename());
@@ -71,7 +66,7 @@ public class KeycloakService {
         attributes.put("phoneNumber", Collections.singletonList(member.getPhoneNumber()));
         user.setAttributes(attributes);
         user.setCredentials(Collections.singletonList(createCrdential(member)));
-        user.setId(UUID.randomUUID().toString());
+        user.setId(member.getExternalId());
         user.setEnabled(true);
 
         return user;

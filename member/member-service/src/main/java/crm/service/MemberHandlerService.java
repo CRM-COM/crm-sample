@@ -38,8 +38,8 @@ public class MemberHandlerService {
   @StreamListener(MemberStream.INPUT)
   public void handleMember(@Payload MemberCreateEvent memberEvent) {
     log.info("Received member create event for id: {}", memberEvent);
-    var externalId = keycloakService.createKeycloakUser(memberEvent);
-    Member member = memberRepository.save(new Member(externalId, memberEvent.getTitle(),
+    keycloakService.createKeycloakUser(memberEvent);
+    Member member = memberRepository.save(new Member(memberEvent.getExternalId(), memberEvent.getTitle(),
             memberEvent.getForename(), memberEvent.getSurname(), memberEvent.getNickname(),
             memberEvent.getAvatarExternalId(), false));
     saveIdentities(memberEvent, member);
