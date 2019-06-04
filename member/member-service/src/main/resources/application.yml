@@ -33,8 +33,6 @@ encryption:
   seed: 84aafbfc73d8184a2d0b8d86b002b13d
   strength: 11
 
-debug: true
-
 keycloak:
   auth-server-url: https://keycloak.crmcloudapi.com/auth
   realm: crm-dev
