@@ -10,10 +10,12 @@ import org.springframework.data.redis.core.index.Indexed;
 @AllArgsConstructor
 public class RedisMember {
 
+    @Indexed
     private String externalId;
 
     @Indexed
     private String email;
 
+    @Indexed
     private String nickname;
 }
