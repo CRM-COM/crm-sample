@@ -18,11 +18,11 @@ public class RedisService {
     }
 
     public RedisMember findByNickname(String nickname) {
-        return template.<String, RedisMember> opsForHash().get("member:nickanme", nickname);
+        return template.<String, RedisMember> opsForHash().get("member:nickname", nickname);
     }
 
     public boolean existsByNickname(String nickname) {
-        return template.<String, RedisMember> opsForHash().hasKey("member:nickanme", nickname);
+        return template.<String, RedisMember> opsForHash().hasKey("member:nickname", nickname);
     }
 
     public RedisMember getByEmail(String email) {
