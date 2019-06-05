@@ -1,10 +1,12 @@
 package crm.model;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -15,14 +17,17 @@ public class MemberCreateDto {
 
   private String surname;
 
+  @NotBlank
   private String nickname;
 
   private String title;
 
   private String avatarExternalId;
 
+  @NotNull
   private Date birthday;
 
+  @NotBlank
   private String email;
 
   private String password;

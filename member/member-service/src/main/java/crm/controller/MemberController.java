@@ -7,6 +7,8 @@ import crm.service.MemberReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -16,7 +18,7 @@ public class MemberController {
     private final MemberReadService memberReadService;
 
     @PostMapping
-    public Token createMember(@RequestBody MemberCreateDto member) {
+    public Token createMember(@Valid @RequestBody MemberCreateDto member) {
         return memberOutService.addMember(member);
     }
 
@@ -43,7 +45,7 @@ public class MemberController {
     }
 
     @PostMapping("/authenticate")
-    public Token authenticate(@RequestBody AuthenticationDto loginDto) {
+    public Token authenticate(@Valid @RequestBody AuthenticationDto loginDto) {
         return memberReadService.authenticate(loginDto);
     }
 
