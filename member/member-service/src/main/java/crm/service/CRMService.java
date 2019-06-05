@@ -63,7 +63,7 @@ public class CRMService {
 
     tokensCount = crmConfig.getTokensCount();
     tokens = new String[tokensCount];
-    refreshToken();
+//    refreshToken();
   }
 
   /**
@@ -73,7 +73,7 @@ public class CRMService {
    * <p>
    * See details in https://discover.crm.com/pages/viewpage.action?pageId=46342004
    */
-  @Scheduled(fixedRate = REFRESH_INTERVAL, initialDelay = REFRESH_INTERVAL)
+  @Scheduled(fixedRate = REFRESH_INTERVAL, initialDelay = 0)
   protected void refreshToken() {
     while (crmConfig.isRefreshTokenActive()) {
       try {
