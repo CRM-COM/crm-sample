@@ -62,6 +62,8 @@ spec:
             value: {{ .Values.database.name }}
           - name: DATABASE_HOST
             value: db.{{ .Values.domain }}
+          - name: SPRING_REDIS_HOST
+            value: redis-master.infra.svc.cluster.local
           - name: KEYCLOAK_CLIENT_SECRET
             valueFrom:
               secretKeyRef:

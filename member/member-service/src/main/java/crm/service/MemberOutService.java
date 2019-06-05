@@ -4,6 +4,7 @@ import crm.config.MemberStream;
 import crm.config.OrganisationStream;
 import crm.event.MemberCreateEvent;
 import crm.event.MemberOrganisationCreateEvent;
+import crm.exception.MicroserviceException;
 import crm.model.MemberCreateDto;
 import crm.model.MemberOrganisationCreateDto;
 import crm.model.MemberOrganisationCreateResponse;
@@ -26,8 +27,10 @@ public class MemberOutService {
   private final MemberStream memberStream;
   private final OrganisationStream organisationStream;
   private final JwtService jwtService;
+  private final RedisService redisService;
 
   public Token addMember(MemberCreateDto member) {
+    checkIfExists(member);
     String externalId = UUID.randomUUID().toString();
     log.info("Sending member create event {}", externalId);
 
@@ -49,6 +52,14 @@ public class MemberOutService {
             .build());
 
     return jwtService.createToken(externalId, null);
+  }
+
+  private void checkIfExists(MemberCreateDto member) {
+    if(redisService.existsByEmail(member.getEmail()))
+      throw new MicroserviceException("Email " + member.getEmail() + " exists");
+
+    if(redisService.existsByNickname(member.getNickname()))
+      throw new MicroserviceException("Nickname " + member.getNickname() + " exists");
   }
 
   public MemberOrganisationCreateResponse addOrganisation(String memberId,

@@ -10,6 +10,7 @@ import crm.event.MemberCreateEvent;
 import crm.event.MemberOrganisationCreateEvent;
 import crm.exception.MicroserviceException;
 import crm.model.IdentityProvider;
+import crm.redis.RedisMember;
 import crm.repository.MemberIdentityRepository;
 import crm.repository.MemberOrgansationRepository;
 import crm.repository.MemberRepository;
@@ -41,6 +42,8 @@ public class MemberHandlerService {
 
   private final MemberCRMStream memberCRMStream;
 
+  private final RedisService redisService;
+
   @StreamListener(MemberStream.INPUT)
   public void handleMember(@Payload MemberCreateEvent memberEvent) {
     log.info("Received member create event for id: {}", memberEvent);
@@ -49,11 +52,16 @@ public class MemberHandlerService {
             memberEvent.getForename(), memberEvent.getSurname(), memberEvent.getNickname(),
             memberEvent.getAvatarExternalId(), false));
     saveIdentities(memberEvent, member);
+    redisService.save(toRedisMember(memberEvent));
 
     var messageChannel = memberCRMStream.outboundMember();
     messageChannel.send(MessageBuilder.withPayload(memberEvent)
         .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
         .build());
+  }
+
+  private RedisMember toRedisMember(MemberCreateEvent memberEvent) {
+    return RedisMember.builder().email(memberEvent.getEmail()).externalId(memberEvent.getExternalId()).nickname(memberEvent.getNickname()).build();
   }
 
   private void saveIdentities(MemberCreateEvent memberEvent, Member member) {
