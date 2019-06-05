@@ -175,7 +175,7 @@ public class CRMService {
       Calendar cal = Calendar.getInstance();
       cal.setTime(birthday);
 
-      return new CRMMemberDateOfBirth(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH),
+      return new CRMMemberDateOfBirth(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1,
           cal.get(Calendar.YEAR));
     } else {
       return null;
