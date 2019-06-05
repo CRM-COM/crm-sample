@@ -56,11 +56,10 @@ public class CRMService {
 
   private Random random = new Random();
 
-  public CRMService(CRMConfig crmConfig, RestTemplate restTemplate,
-      ObjectMapper mapper) {
+  public CRMService(CRMConfig crmConfig, RestTemplate restTemplate) {
     this.crmConfig = crmConfig;
     this.restTemplate = restTemplate;
-    this.mapper = mapper;
+    this.mapper = new ObjectMapper();
 
     tokensCount = crmConfig.getTokensCount();
     tokens = new String[tokensCount];
