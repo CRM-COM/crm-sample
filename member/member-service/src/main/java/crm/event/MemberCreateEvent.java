@@ -31,7 +31,5 @@ public class MemberCreateEvent {
 
   private String password;
 
-  private String cardNumber;
-
   private String phoneNumber;
 }

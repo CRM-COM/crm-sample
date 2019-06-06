@@ -30,8 +30,6 @@ public class MemberCreateDto {
 
   private String password;
 
-  private String cardNumber;
-
   private String phoneNumber;
 
 }

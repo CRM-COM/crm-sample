@@ -45,7 +45,6 @@ public class MemberOutService {
             .birthday(member.getBirthday())
             .email(member.getEmail())
             .password(member.getPassword())
-            .cardNumber(member.getCardNumber())
             .phoneNumber(member.getPhoneNumber())
             .build())
             .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)

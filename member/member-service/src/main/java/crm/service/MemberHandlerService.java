@@ -67,8 +67,6 @@ public class MemberHandlerService {
 
   private void saveIdentities(MemberCreateEvent memberEvent, Member member) {
     savePasswordIdentity(memberEvent, member);
-    if(memberEvent.getCardNumber() != null)
-      saveCreditCardIdentity(memberEvent, member);
     if(memberEvent.getPhoneNumber() != null)
       savePhoneIdentity(memberEvent, member);
   }
@@ -78,15 +76,6 @@ public class MemberHandlerService {
         .identProvider(IdentityProvider.PASSWORD)
         .identChallenge(memberEvent.getEmail())
         .identValue(passwordEncoder.encode(memberEvent.getPassword()))
-        .member(member)
-        .build());
-  }
-
-  private void saveCreditCardIdentity(MemberCreateEvent memberEvent, Member member) {
-    memberIdentityRepository.save(MemberIdentity.builder()
-        .identProvider(IdentityProvider.CREDIT_CARD)
-        .identChallenge(memberEvent.getEmail())
-        .identValue(passwordEncoder.encode(memberEvent.getCardNumber()))
         .member(member)
         .build());
   }
