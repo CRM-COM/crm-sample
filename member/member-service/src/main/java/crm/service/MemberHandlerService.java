@@ -67,8 +67,10 @@ public class MemberHandlerService {
 
   private void saveIdentities(MemberCreateEvent memberEvent, Member member) {
     savePasswordIdentity(memberEvent, member);
-    saveCreditCardIdentity(memberEvent, member);
-    savePhoneIdentity(memberEvent, member);
+    if(memberEvent.getCardNumber() != null)
+      saveCreditCardIdentity(memberEvent, member);
+    if(memberEvent.getPhoneNumber() != null)
+      savePhoneIdentity(memberEvent, member);
   }
 
   private void savePasswordIdentity(MemberCreateEvent memberEvent, Member member) {
