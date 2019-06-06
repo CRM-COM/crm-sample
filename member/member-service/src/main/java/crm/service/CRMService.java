@@ -175,11 +175,13 @@ public class CRMService {
 
   private void saveCrmIdentity(String externalId, String data) {
     try {
+        log.info("saving crm id");
       String crmId = new ObjectMapper().readValue(data, CRMResponseData.class).getId();
       var member = memberRepository.findByExternalId(externalId)
               .orElseThrow(() -> new MicroserviceException("Member not found by externalId " + externalId));
       var crmIdentity = MemberIdentity.builder().identProvider(IdentityProvider.CRM).identValue(crmId).member(member).build();
       memberIdentityRepository.save(crmIdentity);
+        log.info("crm id saved");
     } catch (IOException e) {
       log.info("Error on saving CRM id", e);
     }
