@@ -83,7 +83,6 @@ public class MemberHandlerService {
   private void savePhoneIdentity(MemberCreateEvent memberEvent, Member member) {
     memberIdentityRepository.save(MemberIdentity.builder()
         .identProvider(IdentityProvider.PHONE)
-        .identChallenge(memberEvent.getEmail())
         .identValue(memberEvent.getPhoneNumber())
         .member(member)
         .build());
