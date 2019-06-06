@@ -2,10 +2,8 @@ package crm.service;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+import java.nio.ByteBuffer;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import crm.entity.MemberIdentity;
@@ -161,7 +159,7 @@ public class CRMService {
         .firstName(event.getForename())
         .lastName(event.getSurname())
         .demographics(CRMMemberDemographics.builder()
-//            .idNumber(event.getExternalId())
+            .idNumber(uuidHexToUuid64(event.getExternalId()))
             .dateOfBirth(getBirthday(event.getBirthday()))
             .phones(Arrays.asList(new CRMMemberPhone("MOBILE", event.getPhoneNumber())))
             .emails(Arrays.asList(new CRMMemberEmail("PERSONAL", event.getEmail())))
@@ -197,6 +195,32 @@ public class CRMService {
     } else {
       return null;
     }
+  }
+
+  public static String uuidHexToUuid64(String uuidStr) {
+    UUID uuid = UUID.fromString(uuidStr);
+    byte[] bytes = uuidToBytes(uuid);
+    return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
+  }
+
+  public static String uuid64ToUuidHex(String uuid64) {
+    byte[] decoded = Base64.getUrlDecoder().decode(uuid64);
+    UUID uuid = uuidFromBytes(decoded);
+    return uuid.toString();
+  }
+
+  public static byte[] uuidToBytes(UUID uuid) {
+    ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
+    bb.putLong(uuid.getMostSignificantBits());
+    bb.putLong(uuid.getLeastSignificantBits());
+    return bb.array();
+  }
+
+  public static UUID uuidFromBytes(byte[] decoded) {
+    ByteBuffer bb = ByteBuffer.wrap(decoded);
+    long mostSigBits = bb.getLong();
+    long leastSigBits = bb.getLong();
+    return new UUID(mostSigBits, leastSigBits);
   }
 }
 
