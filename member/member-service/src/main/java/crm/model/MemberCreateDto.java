@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -24,7 +23,6 @@ public class MemberCreateDto {
 
   private String avatarExternalId;
 
-  @NotNull
   private Date birthday;
 
   @NotBlank
