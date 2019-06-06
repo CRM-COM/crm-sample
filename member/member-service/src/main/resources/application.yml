@@ -25,6 +25,12 @@ spring:
         organisation-out:
           destination: organisation
           contentType: application/json
+        payment-instrument-in:
+          destination: payment-instrument
+          contentType: application/json
+        payment-instrument-out:
+          destination: payment-instrument
+          contentType: application/json
 
 server:
   port: 9014
