@@ -20,6 +20,10 @@ public class MemberCRMHandlerService {
   public void handleMember(@Payload MemberCreateEvent memberEvent) {
     log.info("CRM Received member create event for id: {}", memberEvent);
 
+    try {
     crmService.createMember(memberEvent);
+    } catch (Exception e) {
+      log.info("CRM handler error", e);
+    }
   }
 }
