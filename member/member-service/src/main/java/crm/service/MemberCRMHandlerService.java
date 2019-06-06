@@ -18,7 +18,7 @@ public class MemberCRMHandlerService {
 
   @StreamListener(MemberCRMStream.INPUT)
   public void handleMember(@Payload MemberCreateEvent memberEvent) {
-    log.info("Received member create event for id: {}", memberEvent);
+    log.info("CRM Received member create event for id: {}", memberEvent);
 
     crmService.createMember(memberEvent);
   }
