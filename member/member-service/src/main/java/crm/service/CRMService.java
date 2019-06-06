@@ -167,7 +167,7 @@ public class CRMService {
 
     saveCrmIdentity(event.getExternalId(), response.getData().getId());
 
-    log.info("Member has been created: " + response);
+    log.info("Member has been created {}", response);
   }
 
   private void saveCrmIdentity(String externalId, String crmId) {
