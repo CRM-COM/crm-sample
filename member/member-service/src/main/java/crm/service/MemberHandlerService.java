@@ -58,6 +58,7 @@ public class MemberHandlerService {
     messageChannel.send(MessageBuilder.withPayload(memberEvent)
         .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
         .build());
+    log.info("Sending member create event to CRM for id: {}", memberEvent);
   }
 
   private RedisMember toRedisMember(MemberCreateEvent memberEvent) {
