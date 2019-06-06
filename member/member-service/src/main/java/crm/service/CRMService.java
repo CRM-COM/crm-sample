@@ -1,16 +1,18 @@
 package crm.service;
 
-import java.io.IOException;
-import java.net.URI;
-import java.nio.ByteBuffer;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import crm.config.CRMConfig;
 import crm.entity.MemberIdentity;
+import crm.event.MemberCreateEvent;
+import crm.exception.MicroserviceException;
 import crm.model.IdentityProvider;
 import crm.model.crm.*;
 import crm.repository.MemberIdentityRepository;
 import crm.repository.MemberRepository;
+import crm.utils.CRMErrorCodes;
+import crm.utils.Utils;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -20,15 +22,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import crm.config.CRMConfig;
-import crm.event.MemberCreateEvent;
-import crm.exception.MicroserviceException;
-import crm.utils.CRMErrorCodes;
-import crm.utils.Utils;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
+import java.net.URI;
+import java.nio.ByteBuffer;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
@@ -168,23 +165,16 @@ public class CRMService {
 
     CRMStringResponse response = commonPostRequest(url, request, CRMStringResponse.class);
 
-    saveCrmIdentity(event.getExternalId(), response.getData());
+    saveCrmIdentity(event.getExternalId(), response.getData().getId());
 
     log.info("Member has been created: " + response);
   }
 
-  private void saveCrmIdentity(String externalId, String data) {
-    try {
-        log.info("saving crm id");
-      String crmId = new ObjectMapper().readValue(data, CRMResponseData.class).getId();
+  private void saveCrmIdentity(String externalId, String crmId) {
       var member = memberRepository.findByExternalId(externalId)
               .orElseThrow(() -> new MicroserviceException("Member not found by externalId " + externalId));
       var crmIdentity = MemberIdentity.builder().identProvider(IdentityProvider.CRM).identValue(crmId).member(member).build();
       memberIdentityRepository.save(crmIdentity);
-        log.info("crm id saved");
-    } catch (IOException e) {
-      log.info("Error on saving CRM id", e);
-    }
   }
 
   private CRMMemberDateOfBirth getBirthday(Date birthday) {
