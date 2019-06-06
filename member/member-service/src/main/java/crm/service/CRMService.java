@@ -1,5 +1,6 @@
 package crm.service;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -7,6 +8,11 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import crm.entity.MemberIdentity;
+import crm.model.IdentityProvider;
+import crm.model.crm.*;
+import crm.repository.MemberIdentityRepository;
+import crm.repository.MemberRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -21,16 +27,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import crm.config.CRMConfig;
 import crm.event.MemberCreateEvent;
 import crm.exception.MicroserviceException;
-import crm.model.crm.CRMAdapterRequest;
-import crm.model.crm.CRMAdapterResponse;
-import crm.model.crm.CRMAuthenticateRequest;
-import crm.model.crm.CRMAuthenticateResponse;
-import crm.model.crm.CRMCreateMemberRequest;
-import crm.model.crm.CRMMemberDateOfBirth;
-import crm.model.crm.CRMMemberDemographics;
-import crm.model.crm.CRMMemberEmail;
-import crm.model.crm.CRMMemberPhone;
-import crm.model.crm.CRMStringResponse;
 import crm.utils.CRMErrorCodes;
 import crm.utils.Utils;
 import lombok.SneakyThrows;
@@ -48,6 +44,10 @@ public class CRMService {
 
   private final RestTemplate restTemplate;
 
+  private final MemberRepository memberRepository;
+
+  private final MemberIdentityRepository memberIdentityRepository;
+
   private final ObjectMapper mapper;
 
   private int tokensCount;
@@ -56,10 +56,13 @@ public class CRMService {
 
   private Random random = new Random();
 
-  public CRMService(CRMConfig crmConfig, RestTemplate restTemplate) {
+  public CRMService(CRMConfig crmConfig, RestTemplate restTemplate, MemberRepository memberRepository,
+                    MemberIdentityRepository memberIdentityRepository) {
     this.crmConfig = crmConfig;
     this.restTemplate = restTemplate;
     this.mapper = new ObjectMapper();
+    this.memberRepository = memberRepository;
+    this.memberIdentityRepository = memberIdentityRepository;
 
     tokensCount = crmConfig.getTokensCount();
     tokens = new String[tokensCount];
@@ -158,7 +161,7 @@ public class CRMService {
         .firstName(event.getForename())
         .lastName(event.getSurname())
         .demographics(CRMMemberDemographics.builder()
-            .idNumber(event.getExternalId())
+//            .idNumber(event.getExternalId())
             .dateOfBirth(getBirthday(event.getBirthday()))
             .phones(Arrays.asList(new CRMMemberPhone("MOBILE", event.getPhoneNumber())))
             .emails(Arrays.asList(new CRMMemberEmail("PERSONAL", event.getEmail())))
@@ -167,7 +170,21 @@ public class CRMService {
 
     CRMStringResponse response = commonPostRequest(url, request, CRMStringResponse.class);
 
+    saveCrmIdentity(event.getExternalId(), response.getData());
+
     log.info("Member has been created: " + response);
+  }
+
+  private void saveCrmIdentity(String externalId, String data) {
+    try {
+      String crmId = new ObjectMapper().readValue(data, CRMResponseData.class).getId();
+      var member = memberRepository.findByExternalId(externalId)
+              .orElseThrow(() -> new MicroserviceException("Member not found by externalId " + externalId));
+      var crmIdentity = MemberIdentity.builder().identProvider(IdentityProvider.CRM).identValue(crmId).member(member).build();
+      memberIdentityRepository.save(crmIdentity);
+    } catch (IOException e) {
+      log.info("Error on saving CRM id", e);
+    }
   }
 
   private CRMMemberDateOfBirth getBirthday(Date birthday) {
