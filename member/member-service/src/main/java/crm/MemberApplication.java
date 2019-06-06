@@ -1,5 +1,6 @@
 package crm;
 
+import crm.config.PaymentInstrumentStream;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -11,7 +12,7 @@ import crm.config.MemberStream;
 import crm.config.OrganisationStream;
 
 @SpringBootApplication
-@EnableBinding({MemberStream.class, OrganisationStream.class, MemberCRMStream.class})
+@EnableBinding({MemberStream.class, OrganisationStream.class, MemberCRMStream.class, PaymentInstrumentStream.class})
 @EnableConfigurationProperties
 @EnableScheduling
 public class MemberApplication {

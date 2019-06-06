@@ -7,9 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentInstrumentDto {
-
-    private String externalId;
+public class PaymentInstrumentCreateDto {
 
     private InstrumentType instrumentType;
 
