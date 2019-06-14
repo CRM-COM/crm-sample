@@ -12,6 +12,8 @@ import crm.security.JwtService;
 import crm.security.Token;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.KeycloakPrincipal;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,4 +64,7 @@ public class MemberReadService {
     return jwtService.createToken(decodedToken.getExternalId(), decodedToken.getKeycloakExternalId());
   }
 
+  public Page<MemberDto> search(String query, Pageable pageable) {
+    return memberRepository.search(query, pageable).map(this::toDto);
+  }
 }

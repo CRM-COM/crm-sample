@@ -14,14 +14,16 @@ public class SecurityConfig extends WebSecurityConfigure {
                 "/actuator/**",
                 "/member/authenticate",
                 "/member/auth",
-                "/member"
+                "/member",
+                "/internal/**"
         };
     }
 
     @Override
     protected String[] permitAllGet() {
         return new String[]{
-                "/actuator/**"
+                "/actuator/**",
+                "/internal/**"
         };
     }
 }
