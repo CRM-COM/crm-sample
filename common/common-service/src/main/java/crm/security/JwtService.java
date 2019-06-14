@@ -24,7 +24,7 @@ public class JwtService {
 
     private static long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 10; // 10 days
 
-    @Value("${jwt.secret:}")
+    @Value("${security.jwt.key:}")
     private String secret;
 
     public Token createToken(String externalId, String keycloakExternalId) {

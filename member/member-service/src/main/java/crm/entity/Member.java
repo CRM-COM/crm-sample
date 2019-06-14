@@ -31,7 +31,7 @@ public class Member {
 
     private String avatarExternalId;
 
-    private boolean isDeleted;
+    private boolean isDeleted = false;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<MemberIdentity> memberIdentities = new HashSet<>();
