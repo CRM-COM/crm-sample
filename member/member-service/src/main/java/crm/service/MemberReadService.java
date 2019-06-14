@@ -72,7 +72,7 @@ public class MemberReadService {
 
   public Page<MemberDto> search(String criteria, String query, Pageable pageable) {
       final var searchFields = criteria.split(",");
-      String forename = "", surname = "", nickname = "", email = "";
+      String forename = null, surname = null, nickname = null, email = null;
       for(var field : searchFields) {
           switch (field) {
               case "forename": forename = query; break;

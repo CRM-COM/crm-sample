@@ -17,10 +17,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
   @Query("SELECT DISTINCT m from Member m " +
           "LEFT JOIN m.memberIdentities mi " +
           "WHERE " +
-          "(:forename IS NOT NULL AND lower(m.forename) LIKE %:forename%) OR " +
-          "(:surname IS NOT NULL AND lower(m.surname) LIKE %:surname%) OR " +
-          "(:nickname IS NOT NULL AND lower(m.nickname) LIKE %:nickname%) OR " +
-          "(:email IS NOT NULL AND lower(mi.identChallenge) LIKE %:email%)")
+          "(:forename IS NOT NULL AND lower(m.forename) LIKE %lower(:forename)%) OR " +
+          "(:surname IS NOT NULL AND lower(m.surname) LIKE %lower(:surname)%) OR " +
+          "(:nickname IS NOT NULL AND lower(m.nickname) LIKE %lower(:nickname)%) OR " +
+          "(:email IS NOT NULL AND lower(mi.identChallenge) LIKE %lower(:email)%)")
   Page<Member> search(@Param("forename") String forename,
                       @Param("surname") String surname,
                       @Param("nickname") String nickname,
