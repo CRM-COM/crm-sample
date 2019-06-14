@@ -40,7 +40,7 @@ public class OrganisationService {
 
   public OrganisationDto addOrganisation(OrganisationRequest organisationRequest) {
     log.info("Trying to register organisation: {}", organisationRequest);
-    User entity = userRepository.findByEmail(organisationRequest.getEmail());
+    User entity = userRepository.findByEmail(organisationRequest.getEmail()).orElse(null);
     if (entity != null) {
       log.info("User already exists in the system");
       throw new MicroserviceException(HttpStatus.BAD_REQUEST,

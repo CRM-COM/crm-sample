@@ -38,6 +38,16 @@ public class JwtService {
         return Token.builder().accessToken(accessToken).build();
     }
 
+    public Token createToken(String externalId) {
+        long exp = System.currentTimeMillis() + EXPIRATION_TIME;
+        var accessToken = Jwts.builder()
+                .setSubject(externalId)
+                .setExpiration(new Date(exp))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+        return Token.builder().accessToken(accessToken).build();
+    }
+
     public DecodedToken parseToken(HttpServletRequest request) {
         var token = request.getHeader("Authorization");
         return parseToken(token);

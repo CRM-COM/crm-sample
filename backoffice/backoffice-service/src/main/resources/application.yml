@@ -9,3 +9,6 @@ spring:
 
 server:
   port: 9015
+
+jwt:
+  secret: ${JWT_BACKOFFICE}
