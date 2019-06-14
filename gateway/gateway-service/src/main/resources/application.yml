@@ -11,6 +11,13 @@ spring:
           filters:
             - RewritePath=/api/(?<member>.*), /$\{member}
 
+        - id: backoffice-service
+          uri: http://backoffice-service:9014
+          predicates:
+            - Path=/api/backoffice/**
+          filters:
+            - RewritePath=/api/(?<backoffice>.*), /$\{backoffice}
+
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

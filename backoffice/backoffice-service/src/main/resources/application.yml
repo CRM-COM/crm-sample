@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: backoffice-service
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: infra-kafka.infra.svc.cluster.local:9092
+
+server:
+  port: 9015

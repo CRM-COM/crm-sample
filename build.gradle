@@ -16,6 +16,8 @@ buildscript {
 
 plugins {
     id 'com.chattylabs.versioning' version '0.19.2'
+    
+    id 'net.ltgt.apt' version '0.8'
 }
 
 apply from: 'versioning.gradle'

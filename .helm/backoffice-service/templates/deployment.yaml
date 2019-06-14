@@ -64,36 +64,6 @@ spec:
             value: db.{{ .Values.domain }}
           - name: SPRING_REDIS_HOST
             value: redis-master.infra.svc.cluster.local
-          - name: KEYCLOAK_CLIENT_SECRET
-            valueFrom:
-              secretKeyRef:
-                key: clientSecret
-                name: keycloak
-          - name: KEYCLOAK_USERNAME
-            valueFrom:
-              secretKeyRef:
-                key: username
-                name: keycloak
-          - name: KEYCLOAK_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                key: password
-                name: keycloak
-          - name: CRM_USERNAME
-            valueFrom:
-              secretKeyRef:
-                key: username
-                name: crm
-          - name: CRM_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                key: password
-                name: crm
-          - name: CRM_ORGANISATION
-            valueFrom:
-              secretKeyRef:
-                key: organisation
-                name: crm
           - name: JWT_BACKOFFICE
             valueFrom:
               secretKeyRef:
