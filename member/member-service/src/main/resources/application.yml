@@ -55,3 +55,6 @@ crm:
   username: ${CRM_USERNAME}
   password: ${CRM_PASSWORD}
   organisation: ${CRM_ORGANISATION}
+
+jwt:
+  secret: ${JWT_AUTH}

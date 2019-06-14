@@ -6,6 +6,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,8 @@ public class JwtService {
 
     private static long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 10; // 10 days
 
-    private static String SECRET = "0Il7o4eUuoBdOqk3+Y4xSq5E2lGJFallOcdKRuzR7X/tpvqgJ9ka7QHJi1BreAN1wDgyz9AMV562ipLrpqQVfHzo8B9ce8A6gSjs00tGOSzMUrSuGWzCiAKkqsb3rnWBPEoVTg==";
+    @Value("${jwt.secret}")
+    private String secret;
 
     public Token createToken(String externalId, String keycloakExternalId) {
         long exp = System.currentTimeMillis() + EXPIRATION_TIME;
@@ -31,7 +33,7 @@ public class JwtService {
                 .setSubject(externalId)
                 .claim("keycloakExternalId", keycloakExternalId)
                 .setExpiration(new Date(exp))
-                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
         return Token.builder().accessToken(accessToken).build();
     }
@@ -52,7 +54,7 @@ public class JwtService {
 
         var trimmedToken = token.substring(7);
         var claims = Jwts.parser()
-                .setSigningKey(SECRET)
+                .setSigningKey(secret)
                 .parseClaimsJws(trimmedToken)
                 .getBody();
         return new DecodedToken(claims.get("keycloakExternalId", String.class), claims.getSubject());
