@@ -1,6 +1,6 @@
 package crm.service;
 
-import crm.model.MemberDto;
+import crm.model.MemberSearchDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -14,8 +14,8 @@ class MemberProxyService {
 
     private final RestTemplate restTemplate;
 
-    Page<MemberDto> search(String criteria, String query) {
-        return restTemplate.exchange("http://member-service/internal/member/search?criteria=" + criteria + "&query=" + query, HttpMethod.GET, null, new ParameterizedTypeReference<Page<MemberDto>>() {
+    Page<MemberSearchDto> search(String criteria, String query) {
+        return restTemplate.exchange("http://member-service/internal/member/search?criteria=" + criteria + "&query=" + query, HttpMethod.GET, null, new ParameterizedTypeReference<Page<MemberSearchDto>>() {
         }).getBody();
     }
 }

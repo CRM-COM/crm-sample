@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberDto {
+public class MemberSearchDto {
 
   private String externalId;
 
@@ -18,5 +18,7 @@ public class MemberDto {
   private String nickname;
 
   private String title;
+
+  private String crmId;
 
 }

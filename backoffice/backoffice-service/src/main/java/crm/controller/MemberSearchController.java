@@ -1,6 +1,6 @@
 package crm.controller;
 
-import crm.model.MemberDto;
+import crm.model.MemberSearchDto;
 import crm.service.MemberSearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,8 +17,8 @@ public class MemberSearchController {
     private final MemberSearchService service;
 
     @GetMapping("/member/search")
-    public Page<MemberDto> search(@RequestParam(name = "criteria", required = false) String criteria,
-                                  @RequestParam(name = "query", required = false) String query) {
+    public Page<MemberSearchDto> search(@RequestParam(name = "criteria", required = false) String criteria,
+                                        @RequestParam(name = "query", required = false) String query) {
         return service.search(criteria, query);
     }
 }
