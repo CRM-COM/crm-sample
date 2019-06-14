@@ -57,4 +57,4 @@ crm:
   organisation: ${CRM_ORGANISATION}
 
 jwt:
-  secret: ${JWT_AUTH}
+  secret: 0Il7o4eUuoBdOqk3+Y4xSq5E2lGJFallOcdKRuzR7X/tpvqgJ9ka7QHJi1BreAN1wDgyz9AMV562ipLrpqQVfHzo8B9ce8A6gSjs00tGOSzMUrSuGWzCiAKkqsb3rnWBPEoVTg==
