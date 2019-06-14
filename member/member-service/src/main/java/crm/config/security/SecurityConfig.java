@@ -23,7 +23,8 @@ public class SecurityConfig extends WebSecurityConfigure {
     protected String[] permitAllGet() {
         return new String[]{
                 "/actuator/**",
-                "/internal/**"
+                "/internal/**",
+                "/member/search"
         };
     }
 }

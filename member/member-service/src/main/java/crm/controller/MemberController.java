@@ -5,6 +5,9 @@ import crm.security.Token;
 import crm.service.MemberOutService;
 import crm.service.MemberReadService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,6 +30,12 @@ public class MemberController {
         @PathVariable("externalId") String externalId,
         @RequestBody MemberOrganisationCreateDto organisationCreateDto) {
         return memberOutService.addOrganisation(externalId, organisationCreateDto);
+    }
+
+    @GetMapping("/search")
+    public Page<MemberDto> search(@RequestParam(name = "criteria", required = false) String criteria,
+        @RequestParam(name = "query", required = false) String query, Pageable pageable) {
+        return memberReadService.search(criteria, query, pageable);
     }
 
     @GetMapping("/code/{idOrCard}")
