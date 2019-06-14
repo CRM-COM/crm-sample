@@ -19,4 +19,6 @@ public class MemberDto {
 
   private String title;
 
+  private String crmId;
+
 }

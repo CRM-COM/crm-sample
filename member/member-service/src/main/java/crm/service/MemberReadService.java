@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -45,7 +46,14 @@ public class MemberReadService {
   }
 
   private MemberDto toDto(Member member) {
-    return new MemberDto(member.getExternalId(), member.getForename(), member.getSurname(), member.getNickname(), member.getTitle());
+    return new MemberDto(member.getExternalId(), member.getForename(), member.getSurname(),
+        member.getNickname(), member.getTitle(), getCrmId(member.getMemberIdentities()));
+  }
+
+  private String getCrmId(Set<MemberIdentity> memberIdentities) {
+    return memberIdentities.stream()
+        .filter(identity -> identity.getIdentProvider().equals(IdentityProvider.CRM))
+        .findFirst().map(MemberIdentity::getIdentValue).orElse(null);
   }
 
   public MemberDto getMember(String token) {
