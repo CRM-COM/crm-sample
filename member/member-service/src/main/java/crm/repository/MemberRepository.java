@@ -16,12 +16,14 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
   @Query("SELECT DISTINCT m from Member m " +
           "LEFT JOIN m.memberIdentities mi " +
-          "WHERE (:query IS NOT NULL AND " +
-          "(lower(m.forename) LIKE %:query% OR " +
-          "lower(m.surname) LIKE %:query% OR " +
-          "lower(m.nickname) LIKE %:query% OR " +
-          "lower(concat(m.forename, ' ', m.surname)) LIKE %:query% OR " +
-          "lower(concat(m.surname, ' ', m.forename)) LIKE %:query%) OR " +
-          "lower(mi.identChallenge) LIKE %:query%)")
-  Page<Member> search(@Param("query") String query, Pageable pageable);
+          "WHERE " +
+          "(:forename IS NOT NULL AND lower(m.forename) LIKE %:forename%) OR " +
+          "(:surname IS NOT NULL AND lower(m.surname) LIKE %:surname%) OR " +
+          "(:nickname IS NOT NULL AND lower(m.nickname) LIKE %:nickname%) OR " +
+          "(:email IS NOT NULL AND lower(mi.identChallenge) LIKE %:email%)")
+  Page<Member> search(@Param("forename") String forename,
+                      @Param("surname") String surname,
+                      @Param("nickname") String nickname,
+                      @Param("email") String email,
+                      Pageable pageable);
 }

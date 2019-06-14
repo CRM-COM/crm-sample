@@ -11,11 +11,9 @@ import crm.repository.MemberRepository;
 import crm.security.JwtService;
 import crm.security.Token;
 import lombok.RequiredArgsConstructor;
-import org.keycloak.KeycloakPrincipal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +62,17 @@ public class MemberReadService {
     return jwtService.createToken(decodedToken.getExternalId(), decodedToken.getKeycloakExternalId());
   }
 
-  public Page<MemberDto> search(String query, Pageable pageable) {
-    return memberRepository.search(query, pageable).map(this::toDto);
+  public Page<MemberDto> search(String criteria, String query, Pageable pageable) {
+      final var searchFields = criteria.split(",");
+      String forename = "", surname = "", nickname = "", email = "";
+      for(var field : searchFields) {
+          switch (field) {
+              case "forename": forename = query; break;
+              case "surname": surname = query; break;
+              case "nickname": nickname = query; break;
+              case "email": email = query; break;
+          }
+      }
+      return memberRepository.search(forename, surname, nickname, email, pageable).map(this::toDto);
   }
 }
