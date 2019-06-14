@@ -5,6 +5,8 @@ import crm.exception.MicroserviceException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,8 @@ public class JwtService {
 
     private static long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 10; // 10 days
 
-    private static String secret = "0Il7o4eUuoBdOqk3+Y4xSq5E2lGJFallOcdKRuzR7X/tpvqgJ9ka7QHJi1BreAN1wDgyz9AMV562ipLrpqQVfHzo8B9ce8A6gSjs00tGOSzMUrSuGWzCiAKkqsb3rnWBPEoVTg==";
+    @Value("${security.jwt.key}")
+    private String secret;
 
     public Token createToken(String externalId, String keycloakExternalId) {
         long exp = System.currentTimeMillis() + EXPIRATION_TIME;

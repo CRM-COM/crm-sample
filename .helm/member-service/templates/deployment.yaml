@@ -94,11 +94,6 @@ spec:
               secretKeyRef:
                 key: organisation
                 name: crm
-          - name: JWT_BACKOFFICE
-            valueFrom:
-              secretKeyRef:
-                key: backoffice
-                name: jwt
           - name: JWT_AUTH
             valueFrom:
               secretKeyRef:
