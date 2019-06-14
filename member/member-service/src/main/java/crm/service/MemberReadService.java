@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -71,7 +72,7 @@ public class MemberReadService {
   }
 
   public Page<MemberDto> search(String criteria, String query, Pageable pageable) {
-      query = query.toLowerCase();
+      query = Optional.ofNullable(query).map(String::toLowerCase).orElse(null);
       final var searchFields = criteria.split(",");
       String forename = null, surname = null, nickname = null, email = null;
       for(var field : searchFields) {
