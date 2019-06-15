@@ -13,6 +13,8 @@ apply plugin: 'java'
 ext {
     name = 'backoffice-service'
     description = 'Backoffice service'
+
+    mapstructVersion = "1.2.0.Final"
 }
 
 apply from:'../../bootservice.gradle'
@@ -22,11 +24,15 @@ dependencies {
     api project(":common:common-jpa")
     api project(":common:common-kafka")
 
-    compile 'org.mapstruct:mapstruct:1.3.0.Final'
 
-    api 'org.mapstruct:mapstruct-processor:1.3.0.Final'
+    compile "org.mapstruct:mapstruct-jdk8:$mapstructVersion"
+    compile "org.jetbrains:annotations:16.0.2"
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    compileOnly "org.mapstruct:mapstruct-processor:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion", "org.projectlombok:lombok:$lombokVersion"
 
-//    compile 'org.springframework.cloud:spring-cloud-starter-kubernetes'
+    testCompileClasspath "org.mapstruct:mapstruct-processor:$mapstructVersion", "org.projectlombok:lombok:$lombokVersion"
+
     api 'io.springfox:springfox-swagger2:2.9.2'
     api 'io.springfox:springfox-swagger-ui:2.9.2'
 
