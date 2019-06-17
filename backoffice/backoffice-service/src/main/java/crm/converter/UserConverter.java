@@ -12,6 +12,5 @@ import crm.model.OrganisationRequest;
 public interface UserConverter {
 
   @Mapping(target = "password", source = "password")
-  User toEntity(OrganisationRequest s,
-      String password, LifeCycleState state);
+  User toEntity(OrganisationRequest s, String password, LifeCycleState state);
 }

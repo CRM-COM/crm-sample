@@ -43,8 +43,7 @@ public class OrganisationService {
     User entity = userRepository.findByEmail(organisationRequest.getEmail()).orElse(null);
     if (entity != null) {
       log.info("User already exists in the system");
-      throw new MicroserviceException(HttpStatus.BAD_REQUEST,
-          "The user with email: " + organisationRequest.getEmail() + " already exists");
+      throw new MicroserviceException(HttpStatus.BAD_REQUEST, "The user with email: " + organisationRequest.getEmail() + " already exists");
     } else {
       entity = createUser(organisationRequest);
     }
@@ -58,8 +57,7 @@ public class OrganisationService {
   private Organisation createOrganisation(OrganisationRequest organisationRequest) {
     var vatId = organisationRequest.getVatId();
     if(!isEmpty(vatId) && organisationRepository.existsOrganisationByVatId(vatId)){
-      throw new MicroserviceException(HttpStatus.BAD_REQUEST,
-          "The vatId: " + vatId + " already exists");
+      throw new MicroserviceException(HttpStatus.BAD_REQUEST, "The vatId: " + vatId + " already exists");
     }
     var organisation = organisationConverter.toEntity(organisationRequest, LifeCycleState.ACTIVE);
     return organisationRepository.save(organisation);
@@ -67,9 +65,7 @@ public class OrganisationService {
 
   private User createUser(OrganisationRequest organisationRequest) {
     var password = new BCryptPasswordEncoder().encode(organisationRequest.getPassword());
-    var user = userConverter
-        .toEntity(organisationRequest, password,
-            LifeCycleState.ACTIVE);
+    var user = userConverter.toEntity(organisationRequest, password, LifeCycleState.ACTIVE);
     return userRepository.save(user);
   }
 }
