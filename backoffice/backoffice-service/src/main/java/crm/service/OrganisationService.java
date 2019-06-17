@@ -4,6 +4,8 @@ import static org.springframework.util.StringUtils.isEmpty;
 
 import javax.transaction.Transactional;
 
+import crm.entity.billing.AccountReceivable;
+import crm.entity.billing.AccountReceivableType;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -60,6 +62,9 @@ public class OrganisationService {
       throw new MicroserviceException(HttpStatus.BAD_REQUEST, "The vatId: " + vatId + " already exists");
     }
     var organisation = organisationConverter.toEntity(organisationRequest, LifeCycleState.ACTIVE);
+    final var accountReceivable = new AccountReceivable();
+    accountReceivable.setType(AccountReceivableType.CRM);
+    organisation.setAccountReceivable(accountReceivable);
     return organisationRepository.save(organisation);
   }
 
