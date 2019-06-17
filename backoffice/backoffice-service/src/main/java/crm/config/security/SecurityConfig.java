@@ -13,6 +13,7 @@ public class SecurityConfig extends WebSecurityConfigure {
         return new String[]{
                 "/actuator/**",
                 "/backoffice/organisation/register",
+                "/backoffice/authenticate",
         };
     }
 
