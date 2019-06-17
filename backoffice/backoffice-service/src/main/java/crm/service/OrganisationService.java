@@ -63,6 +63,7 @@ public class OrganisationService {
     }
     var organisation = organisationConverter.toEntity(organisationRequest, LifeCycleState.ACTIVE);
     final var accountReceivable = new AccountReceivable();
+    accountReceivable.setExternalLinkId("dummy-external-link");
     accountReceivable.setType(AccountReceivableType.CRM);
     organisation.setAccountReceivable(accountReceivable);
     return organisationRepository.save(organisation);
