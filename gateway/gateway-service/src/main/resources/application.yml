@@ -12,7 +12,7 @@ spring:
             - RewritePath=/api/(?<member>.*), /$\{member}
 
         - id: backoffice-service
-          uri: http://backoffice-service:9014
+          uri: http://backoffice-service:9015
           predicates:
             - Path=/api/backoffice/**
           filters:
