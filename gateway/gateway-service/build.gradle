@@ -37,6 +37,8 @@ dependencies {
     api "org.springframework.boot:spring-boot-configuration-processor"
     api "org.springframework.data:spring-data-commons"
 
+    api "org.springframework:spring-webmvc:5.1.5.RELEASE"
+
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
 //    compile 'org.springframework.cloud:spring-cloud-starter-kubernetes'
 //    compile 'org.springframework.cloud:spring-cloud-starter-kubernetes-config'

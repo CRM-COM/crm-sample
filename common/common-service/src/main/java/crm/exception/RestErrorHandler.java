@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,13 @@ public class RestErrorHandler {
         log.error("Error caught: ", ex);
 
         return new ResponseEntity<>(new RestMicroserviceException(ex), ex.getErrorCode());
+    }
+
+    @ExceptionHandler(MalformedJwtException.class)
+    @ResponseBody
+    public RestMicroserviceException handleMalformedJwtException(MalformedJwtException ex) {
+        log.error("Error caught: ", ex);
+        return new RestMicroserviceException(HttpStatus.FORBIDDEN, ex.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
