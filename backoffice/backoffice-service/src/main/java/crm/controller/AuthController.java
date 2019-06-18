@@ -21,7 +21,5 @@ public class AuthController {
     }
 
     @GetMapping("/token/valid")
-    public void validateToken(@RequestHeader("Authorization") String token) {
-        authService.validateToken(token);
-    }
+    public void validateToken() { }
 }

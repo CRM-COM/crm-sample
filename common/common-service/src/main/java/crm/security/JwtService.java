@@ -70,18 +70,6 @@ public class JwtService {
         return new DecodedToken(claims.get("keycloakExternalId", String.class), claims.getSubject());
     }
 
-    public DecodedToken parseBackofficeToken(String token) {
-        if (token == null || !token.startsWith("Bearer "))
-            return null;
-
-        var trimmedToken = token.substring(7);
-        var claims = Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(trimmedToken)
-                .getBody();
-        return new DecodedToken("", claims.getSubject());
-    }
-
     public DecodedToken decodeKeycloakToken(String JWTEncoded) {
         var split = JWTEncoded.split("\\.");
         try {

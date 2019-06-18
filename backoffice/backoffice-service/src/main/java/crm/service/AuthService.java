@@ -28,8 +28,4 @@ public class AuthService {
         if (!new BCryptPasswordEncoder().matches(authPassword, userPassword))
             throw new MicroserviceException(HttpStatus.UNAUTHORIZED, "Incorrect password");
     }
-
-    public void validateToken(String token) {
-        jwtService.parseBackofficeToken(token);
-    }
 }

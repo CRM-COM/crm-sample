@@ -1,5 +1,6 @@
 package crm.security;
 
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -8,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JWTAuthenticationFilter extends GenericFilterBean {
@@ -20,9 +22,15 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        var authentication = jwtService.parseTokenToAuthentication((HttpServletRequest) request);
+        try {
+            var authentication = jwtService.parseTokenToAuthentication((HttpServletRequest) request);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        filterChain.doFilter(request, response);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            filterChain.doFilter(request, response);
+        } catch (MalformedJwtException e) {
+            HttpServletResponse res = (HttpServletResponse) response;
+            res.setStatus(403);
+            res.getWriter().write("Invalid jwt token");
+        }
     }
 }
