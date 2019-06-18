@@ -16,7 +16,10 @@ public class MemberSearchController {
 
     @GetMapping("/member/search")
     public String search(@RequestParam(name = "criteria", required = false) String criteria,
-                                        @RequestParam(name = "query", required = false) String query) {
-        return service.search(criteria, query);
+                         @RequestParam(name = "query", required = false) String query,
+                         @RequestParam(name = "page", required = false) String page,
+                         @RequestParam(name = "size", required = false) String size,
+                         @RequestParam(name = "sort", required = false) String sort) {
+        return service.search(criteria, query, page, size, sort);
     }
 }
