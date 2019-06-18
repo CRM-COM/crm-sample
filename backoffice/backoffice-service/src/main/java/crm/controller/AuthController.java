@@ -4,10 +4,7 @@ import crm.model.AuthDto;
 import crm.security.Token;
 import crm.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -21,5 +18,10 @@ public class AuthController {
     @PostMapping("/authenticate")
     public Token authenticate(@RequestBody @Valid AuthDto auth) {
         return authService.authenticate(auth);
+    }
+
+    @GetMapping("/token/valid")
+    public void validateToken(@RequestHeader("Authorization") String token) {
+        authService.validateToken(token);
     }
 }
