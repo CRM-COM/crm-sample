@@ -3,6 +3,15 @@ spring:
     name: gateway-service
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_LAST
+        globalcors:
+          corsConfigurations:
+            '[/**]':
+              allowedOrigins: "*"
+              allowedMethods: "*"
+              allowCredentials: true
+              allowedHeaders: "*"
       routes:
         - id: member-service
           uri: http://member-service:9014
