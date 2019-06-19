@@ -3,8 +3,8 @@ spring:
     name: gateway-service
   cloud:
     gateway:
-      default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_LAST
+#      default-filters:
+#        - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_LAST
       globalcors:
         corsConfigurations:
           '[/**]':
