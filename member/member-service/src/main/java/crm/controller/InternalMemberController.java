@@ -18,8 +18,9 @@ public class InternalMemberController {
     private final MemberReadService service;
 
     @GetMapping("/member/search")
-    public Page<MemberDto> search(@RequestParam(name = "criteria", required = false) String criteria,
-                                  @RequestParam(name = "query", required = false) String query, Pageable pageable) {
+    public Page<MemberDto> search(@RequestParam(name = "criteria", required = false, defaultValue = "") String criteria,
+                                  @RequestParam(name = "query", required = false, defaultValue = "") String query,
+                                  Pageable pageable) {
         return service.search(criteria, query, pageable);
     }
 }

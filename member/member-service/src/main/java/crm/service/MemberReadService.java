@@ -10,6 +10,7 @@ import crm.repository.MemberIdentityRepository;
 import crm.repository.MemberRepository;
 import crm.security.JwtService;
 import crm.security.Token;
+import io.micrometer.core.instrument.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -72,9 +73,9 @@ public class MemberReadService {
   }
 
   public Page<MemberDto> search(String criteria, String query, Pageable pageable) {
-      if(criteria == null || query == null)
+      if(StringUtils.isBlank(criteria) || StringUtils.isBlank(query))
           return memberRepository.findAll(pageable).map(this::toDto);
-      query = Optional.ofNullable(query).map(String::toLowerCase).orElse(null);
+      query = query.toLowerCase();
       final var searchFields = criteria.split(",");
       String forename = null, surname = null, nickname = null, email = null;
       for(var field : searchFields) {
