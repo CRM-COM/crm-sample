@@ -17,8 +17,8 @@ public class MemberSearchController {
     private final MemberSearchService service;
 
     @GetMapping("/member/search")
-    public ResponseEntity<String> search(@RequestParam(name = "criteria", required = false) String criteria,
-                                        @RequestParam(name = "query", required = false) String query,
+    public ResponseEntity<String> search(@RequestParam(name = "criteria", required = false, defaultValue = "") String criteria,
+                                        @RequestParam(name = "query", required = false, defaultValue = "") String query,
                                         @RequestParam(name = "page", required = false, defaultValue = "") String page,
                                         @RequestParam(name = "size", required = false, defaultValue = "") String size,
                                         @RequestParam(name = "sort", required = false, defaultValue = "") String sort) {
