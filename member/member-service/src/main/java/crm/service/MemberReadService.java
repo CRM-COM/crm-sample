@@ -72,6 +72,8 @@ public class MemberReadService {
   }
 
   public Page<MemberDto> search(String criteria, String query, Pageable pageable) {
+      if(criteria == null || query == null)
+          return memberRepository.findAll(pageable).map(this::toDto);
       query = Optional.ofNullable(query).map(String::toLowerCase).orElse(null);
       final var searchFields = criteria.split(",");
       String forename = null, surname = null, nickname = null, email = null;
