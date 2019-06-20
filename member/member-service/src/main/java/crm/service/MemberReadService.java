@@ -48,7 +48,7 @@ public class MemberReadService {
 
   private MemberDto toDto(Member member) {
     return new MemberDto(member.getExternalId(), member.getForename(), member.getSurname(),
-        member.getNickname(), member.getTitle(), getCrmId(member.getMemberIdentities()));
+        member.getNickname(), member.getTitle(), getCrmId(member.getMemberIdentities()), member.getAvatarExternalId());
   }
 
   private String getCrmId(Set<MemberIdentity> memberIdentities) {

@@ -21,4 +21,5 @@ public class MemberSearchDto {
 
   private String crmId;
 
+  private String avatar;
 }
