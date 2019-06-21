@@ -1,10 +1,10 @@
 package crm.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberDto {
@@ -22,4 +22,8 @@ public class MemberDto {
   private String crmId;
 
   private String avatar;
+
+  private String email;
+
+  private String phone;
 }

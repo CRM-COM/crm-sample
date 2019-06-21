@@ -18,9 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -48,15 +48,34 @@ public class MemberReadService {
   }
 
   private MemberDto toDto(Member member) {
-    return new MemberDto(member.getExternalId(), member.getForename(), member.getSurname(),
-        member.getNickname(), member.getTitle(), getCrmId(member.getMemberIdentities()), member.getAvatarExternalId());
+      return MemberDto.builder()
+              .externalId(member.getExternalId())
+              .forename(member.getForename())
+              .surname(member.getSurname())
+              .nickname(member.getNickname())
+              .title(member.getTitle())
+              .avatar(member.getAvatarExternalId())
+              .crmId(getIdentityValue(member.getMemberIdentities(), IdentityProvider.CRM))
+              .phone(getIdentityValue(member.getMemberIdentities(), IdentityProvider.PHONE))
+              .email(getIdentity(member.getMemberIdentities(), IdentityProvider.PASSWORD, MemberIdentity::getIdentChallenge))
+              .build();
   }
 
-  private String getCrmId(Set<MemberIdentity> memberIdentities) {
-    return memberIdentities.stream()
-        .filter(identity -> identity.getIdentProvider().equals(IdentityProvider.CRM))
-        .findFirst().map(MemberIdentity::getIdentValue).orElse(null);
-  }
+    private String getIdentity(Set<MemberIdentity> identities, IdentityProvider provider, Function<MemberIdentity, String> getValue) {
+        return identities.stream()
+                .filter(identity -> isProvider(provider, identity))
+                .findFirst()
+                .map(getValue)
+                .orElse(null);
+    }
+
+    private boolean isProvider(IdentityProvider provider, MemberIdentity identity) {
+        return identity.getIdentProvider().equals(provider);
+    }
+
+    private String getIdentityValue(Set<MemberIdentity> memberIdentities, IdentityProvider provider) {
+      return getIdentity(memberIdentities, provider, MemberIdentity::getIdentValue);
+    }
 
   public MemberDto getMember(String token) {
     var decoded = jwtService.parseToken(token);
