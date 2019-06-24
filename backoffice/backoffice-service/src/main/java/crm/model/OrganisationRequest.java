@@ -25,12 +25,9 @@ public class OrganisationRequest {
   private String organisationName;
   private String organisationDescription;
   private String vatId;
-  @NotBlank
   private String fullAddress;
   private String areaCode;
-  @NotBlank
   private String zipPostcode;
-  @NotBlank
   private String countryCode;
   private BigDecimal latitude;
   private BigDecimal longitude;
