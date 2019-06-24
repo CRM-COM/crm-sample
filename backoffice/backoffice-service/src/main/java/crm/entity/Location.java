@@ -19,16 +19,16 @@ public class Location {
   @GeneratedValue
   private Long id;
 
-  @Column(length = 2048, nullable = false)
+  @Column(length = 2048)
   private String fullAddress;
 
   @Column(length = 10)
   private String areaCode;
 
-  @Column(length = 10, nullable = false)
+  @Column(length = 10)
   private String zipPostcode;
 
-  @Column(length = 2, nullable = false)
+  @Column(length = 2)
   private String countryCode;
 
   @Column
