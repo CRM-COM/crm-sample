@@ -216,7 +216,7 @@ public class CRMService {
   }
 
   public CRMContactDetails getMember(String crmId) {
-    return restTemplate.getForObject(crmConfig.getUrl() + "contact_information/show?token=" + getToken() +
+    return restTemplate.getForObject(crmConfig.getUrl() + "/contact_information/show?token=" + getToken() +
             "&contact_information_identifier=id=" + crmId, CRMContactDetails.class);
   }
 }
