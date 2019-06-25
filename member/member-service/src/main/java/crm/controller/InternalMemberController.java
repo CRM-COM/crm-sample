@@ -1,14 +1,12 @@
 package crm.controller;
 
 import crm.model.MemberDto;
+import crm.model.crm.CRMContactDetails;
 import crm.service.MemberReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/internal")
@@ -22,5 +20,10 @@ public class InternalMemberController {
                                   @RequestParam(name = "query", required = false, defaultValue = "") String query,
                                   Pageable pageable) {
         return service.search(criteria, query, pageable);
+    }
+
+    @GetMapping("/member/{externalId}")
+    public CRMContactDetails getCrmMember(@PathVariable String externalId) {
+        return service.getCrmMember(externalId);
     }
 }

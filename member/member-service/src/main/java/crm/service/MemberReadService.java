@@ -6,6 +6,7 @@ import crm.exception.MicroserviceException;
 import crm.model.AuthenticationDto;
 import crm.model.IdentityProvider;
 import crm.model.MemberDto;
+import crm.model.crm.CRMContactDetails;
 import crm.repository.MemberIdentityRepository;
 import crm.repository.MemberRepository;
 import crm.security.JwtService;
@@ -31,6 +32,7 @@ public class MemberReadService {
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final KeycloakService keycloakService;
+  private final CRMService crmService;
 
   public MemberDto getMemberByIdOrCard(String idOrCard) {
     try {
@@ -107,4 +109,12 @@ public class MemberReadService {
       }
       return memberRepository.search(forename, surname, nickname, email, pageable).map(this::toDto);
   }
+
+    public CRMContactDetails getCrmMember(String externalId) {
+      return memberRepository.findByExternalId(externalId)
+              .map(Member::getMemberIdentities)
+              .map(identities -> getIdentityValue(identities, IdentityProvider.CRM))
+              .map(crmService::getMember)
+              .orElseThrow(() -> new MicroserviceException(HttpStatus.BAD_REQUEST, "Member not found"));
+    }
 }

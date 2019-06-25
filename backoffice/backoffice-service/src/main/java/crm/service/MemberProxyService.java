@@ -1,5 +1,6 @@
 package crm.service;
 
+import crm.model.CRMContactDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,9 @@ class MemberProxyService {
                         "&size=" + size +
                         "&sort=" + sort,
                 HttpMethod.GET, null, String.class).getBody();
+    }
+
+    CRMContactDetails getCrmMember(String memberExternalId) {
+        return restTemplate.getForObject("http://member-service:9014/internal/member/" + memberExternalId, CRMContactDetails.class);
     }
 }

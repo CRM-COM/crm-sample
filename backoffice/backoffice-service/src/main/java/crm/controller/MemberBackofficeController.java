@@ -1,20 +1,18 @@
 package crm.controller;
 
-import crm.service.MemberSearchService;
+import crm.model.CRMContactDetails;
+import crm.service.MemberBackofficeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/backoffice")
 @RequiredArgsConstructor
-public class MemberSearchController {
+public class MemberBackofficeController {
 
-    private final MemberSearchService service;
+    private final MemberBackofficeService service;
 
     @GetMapping("/member/search")
     public ResponseEntity<String> search(@RequestParam(name = "criteria", required = false, defaultValue = "") String criteria,
@@ -25,5 +23,10 @@ public class MemberSearchController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(service.search(criteria, query, page, size, sort));
+    }
+
+    @GetMapping("/member/{externalId}")
+    public CRMContactDetails getCrmMember(@PathVariable String externalId) {
+        return service.getCrmMember(externalId);
     }
 }
