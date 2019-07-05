@@ -1,0 +1,15 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ template "backend-service.fullname" . }}
+data:
+  application.yaml: |-
+    zuul:
+      routes:
+        member-service:
+          path: /member/**
+        backoffice-service:
+          path: /backoffice/**
+
+    member-service.ribbon.listOfServers: "http://member-service:9014"
+    backoffice-service.ribbon.listOfServers: "http://backoffice-service:9015"

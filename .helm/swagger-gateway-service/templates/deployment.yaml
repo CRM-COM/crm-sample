@@ -1,0 +1,71 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "backend-service.fullname" . }}
+  labels:
+    app: {{ template "backend-service.name" . }}
+    chart: {{ template "backend-service.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "backend-service.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "backend-service.name" . }}
+        release: {{ .Release.Name }}
+      annotations:
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "{{ .Values.service.managementPort }}"
+        prometheus.io/scrape: "true"
+    spec:
+      serviceAccountName: {{ template "backend-service.fullname" . }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ template  "backend-service.fullname" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.baseRepository }}/{{.Values.image.name}}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          {{- if .Values.features.remoteDebugging }}
+          - name: JAVA_OPTS
+            value: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044
+          {{- end }}
+
+          volumeMounts:
+            - mountPath: /var/run/config
+              name: config
+              readOnly: true
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 60
+            httpGet:
+              path: /actuator/health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
