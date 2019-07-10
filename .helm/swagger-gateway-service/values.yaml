@@ -12,7 +12,7 @@ image:
 
 service:
   type: NodePort
-  port: 8887
+  port: 8889
 
 features:
   remoteDebugging: true
