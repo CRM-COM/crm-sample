@@ -24,7 +24,17 @@ public class SecurityConfig extends WebSecurityConfigure {
         return new String[]{
                 "/actuator/**",
                 "/internal/**",
-                "/member/search"
+                "/member/search",
+
+                "/index.html",
+                "/assets/**",
+                "/**.js",
+                "/**.css",
+                "/**.js.map",
+                "/swagger-resources/**",
+                "/swagger-ui.html",
+                "/v2/api-docs",
+                "/webjars/**"
         };
     }
 }
