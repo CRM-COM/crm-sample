@@ -17,7 +17,7 @@ metadata:
     networking.gke.io/managed-certificates: swagger
 spec:
   backend:
-    serviceName: gateway-service
-    servicePort: 8887
+    serviceName: swagger-gateway-service
+    servicePort: 8889
 
 {{- end }}
