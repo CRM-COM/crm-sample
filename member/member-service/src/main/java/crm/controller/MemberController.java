@@ -32,12 +32,6 @@ public class MemberController {
         return memberOutService.addOrganisation(externalId, organisationCreateDto);
     }
 
-    @GetMapping("/search")
-    public Page<MemberDto> search(@RequestParam(name = "criteria", required = false) String criteria,
-        @RequestParam(name = "query", required = false) String query, Pageable pageable) {
-        return memberReadService.search(criteria, query, pageable);
-    }
-
     @GetMapping("/code/{idOrCard}")
     public MemberDto getMemberByIdOrCard(@PathVariable("idOrCard") String idOrCard) {
       return memberReadService.getMemberByIdOrCard(idOrCard);
