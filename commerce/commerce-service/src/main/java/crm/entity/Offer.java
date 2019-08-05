@@ -42,6 +42,9 @@ public class Offer extends AuditBase {
     @OneToMany(mappedBy = "offer", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<OfferPrice> prices = new HashSet<>();
 
+    @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL)
+    private OfferEntitlement enablement;
+
     @ManyToOne(optional = false)
     private Product product;
 
