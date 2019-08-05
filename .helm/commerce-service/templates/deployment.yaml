@@ -1,0 +1,113 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "backend-service.fullname" . }}
+  labels:
+    app: {{ template "backend-service.name" . }}
+    chart: {{ template "backend-service.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "backend-service.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "backend-service.name" . }}
+        release: {{ .Release.Name }}
+      annotations:
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "{{ .Values.service.port }}"
+        prometheus.io/scrape: "true"
+    spec:
+      serviceAccountName: {{ template "backend-service.fullname" . }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ template  "backend-service.fullname" . }}
+        - name: secret
+          secret:
+            secretName: {{ template "backend-service.name" .}}
+            optional: true
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.baseRepository }}/{{.Values.image.name}}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: SPRING_REDIS_HOST
+            value: redis-master.infra.svc.cluster.local
+          {{- if .Values.features.remoteDebugging }}
+          - name: JAVA_OPTS
+            value: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044
+          {{- end }}
+          - name: SPRING_APPLICATION_NAME
+            value: {{ template "backend-service.name" . }}
+          - name: SPRING_PROFILES_ACTIVE
+            value: webservice{{- if .Values.database.enabled}},db{{- end}}
+          {{- if .Values.database.enabled}}
+          - name: DATABASE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: database-{{ .Values.database.name }}-{{ .Values.database.mode }}
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: database-{{ .Values.database.name }}-{{ .Values.database.mode }}
+          - name: DATABASE_NAME
+            value: {{ .Values.database.name }}
+          - name: DATABASE_HOST
+            value: db.{{ .Values.domain }}
+          - name: SPRING_REDIS_HOST
+            value: redis-master.infra.svc.cluster.local
+          - name: JWT_AUTH
+            valueFrom:
+              secretKeyRef:
+                key: commerce
+                name: jwt
+          - name: JWT_AUTH
+            valueFrom:
+              secretKeyRef:
+                key: auth
+                name: jwt
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /var/run/secrets-gcp/serviceaccount.json
+          {{- end }}
+          volumeMounts:
+            - mountPath: /var/run/config
+              name: config
+              readOnly: true
+            - mountPath: /var/run/secret
+              name: secret
+              readOnly: true
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 120
+            httpGet:
+              path: /actuator/health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
