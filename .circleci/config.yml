@@ -51,6 +51,7 @@ jobs:
             docker save -o docker-cache/gateway-image.tar eu.gcr.io/crm-ecenter/gateway-service:${VERSION}
             docker save -o docker-cache/backoffice-image.tar eu.gcr.io/crm-ecenter/backoffice-service:${VERSION}
             docker save -o docker-cache/swagger-gateway-service.tar eu.gcr.io/crm-ecenter/swagger-gateway-service:${VERSION}
+            docker save -o docker-cache/commerce-service.tar eu.gcr.io/crm-ecenter/commerce-service:${VERSION}
 
       - persist_to_workspace:
           root: .
@@ -74,6 +75,7 @@ jobs:
             docker load --input docker-cache/gateway-image.tar
             docker load --input docker-cache/backoffice-image.tar
             docker load --input docker-cache/swagger-gateway-service.tar
+            docker load --input docker-cache/commerce-service.tar
 
       - run:
           name: Google authentication
@@ -92,6 +94,7 @@ jobs:
             docker push eu.gcr.io/crm-ecenter/gateway-service:${VERSION}
             docker push eu.gcr.io/crm-ecenter/backoffice-service:${VERSION}
             docker push eu.gcr.io/crm-ecenter/swagger-gateway-service:${VERSION}
+            docker push eu.gcr.io/crm-ecenter/commerce-service:${VERSION}
       - run:
           name: Set current context
           command: gcloud container clusters get-credentials crm-ecenter-cluster --zone europe-west2-b --project crm-ecenter
