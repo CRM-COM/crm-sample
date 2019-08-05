@@ -1,7 +1,6 @@
 package crm.converter;
 
 import crm.entity.Offer;
-import crm.entity.OfferEntitlement;
 import crm.model.OfferDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,13 +8,14 @@ import org.mapstruct.Mappings;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {OfferPriceConverter.class, OfferEntitlement.class})
+@Mapper(componentModel = "spring", uses = { OfferPriceConverter.class, PromotionConverter.class,
+        OfferEntitlementConverter.class, OfferGlobalizationConverter.class, OfferFeaturesConverter.class })
 public interface OfferConverter {
 
     List<OfferDto> toDtos(Iterable<? extends Offer> productOffers);
 
     @Mappings({
-            @Mapping(target = "externalReference", ignore = true)
+            @Mapping(target="externalReference", ignore = true)
     })
     OfferDto toDto(Offer entity);
 }

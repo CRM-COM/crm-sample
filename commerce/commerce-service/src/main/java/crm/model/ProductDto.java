@@ -1,5 +1,7 @@
 package crm.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -25,6 +27,15 @@ public class ProductDto {
 
     @Builder.Default
     private List<OfferDto> offers = new ArrayList<>();
+
+    @JsonIgnore
+    @Builder.Default
+    private List<ProductGlobalisationDto> productGlobalisations = new ArrayList<>();
+
+    @JsonIgnore
+    @Builder.Default
+    @JsonProperty
+    private List<ProductPlatformDto> productPlatforms = new ArrayList<>();
 
     private String productSku;
 }

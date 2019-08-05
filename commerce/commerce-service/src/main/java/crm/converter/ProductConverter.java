@@ -8,7 +8,7 @@ import org.mapstruct.Mappings;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {OfferConverter.class})
+@Mapper(componentModel = "spring", uses = { OfferConverter.class, ProductGlobalisationConverter.class, ProductPlatformConverter.class })
 public interface ProductConverter {
     List<ProductDto> toDtos(Iterable<? extends Product> products);
 

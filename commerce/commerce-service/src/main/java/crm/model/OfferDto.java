@@ -1,6 +1,6 @@
 package crm.model;
 
-import crm.entity.OfferType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,5 +36,17 @@ public class OfferDto {
 
     @Builder.Default
     private List<OfferPriceDto> prices = new ArrayList<>();
+
+    @Builder.Default
+    private List<PromotionDto> promotions = new ArrayList<>();
+
+    @JsonIgnore
+    @Builder.Default
+    private List<OfferGlobalisationDto> offerGlobalisations = new ArrayList<>();
+
+    @Builder.Default
+    private List<OfferFeaturesDto> offerFeatures = new ArrayList<>();
+
+    private OfferEntitlementDto enablement;
 
 }

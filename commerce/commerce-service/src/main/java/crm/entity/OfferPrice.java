@@ -1,5 +1,6 @@
 package crm.entity;
 
+import crm.model.Quality;
 import lombok.*;
 import org.hibernate.annotations.ResultCheckStyle;
 import org.hibernate.annotations.SQLDelete;
@@ -20,37 +21,40 @@ import java.util.stream.Collectors;
 @Where(clause = "is_deleted=0")
 public class OfferPrice extends AuditBase {
 
-    @GeneratedValue
-    @Id
+	@GeneratedValue 
+	@Id
     private Long id;
+	
+	@Column(nullable=false, length=3)
+	private String iso4127CurrencyCode;
 
-    @Column(nullable = false, length = 3)
-    private String iso4127CurrencyCode;
+	@Column(length=3)
+	private String iso3166CountryCode;
 
-    @Column(length = 3)
-    private String iso3166CountryCode;
+	@Column(nullable=false, length=128)
+	private String name;
 
-    @Column(nullable = false, length = 128)
-    private String name;
+	@Column(nullable=false)
+	private Double price;
 
-    @Column(nullable = false)
-    private Double price;
+	private Double tax;
 
-    private Double tax;
+	@Enumerated(EnumType.STRING)
+	private Quality quality;
+	
+	@Column(length=64)
+	private String priceExternalReference;
+	
+	@ManyToOne(optional=true)
+	private TechProvider platform;
+	
+	@ManyToOne
+	private Offer offer;
 
-    @Enumerated(EnumType.STRING)
-    private Quality quality;
-
-    @Column(length = 64)
-    private String priceExternalReference;
-
-    @ManyToOne
-    private Offer offer;
-
-    public static Collection<String> getIso4127CurrencyCodes(Set<Offer> offers) {
-        return offers.stream()
-                .flatMap(it -> it.getPrices().stream())
-                .map(OfferPrice::getIso4127CurrencyCode)
-                .collect(Collectors.toSet());
-    }
+	public static Collection<String> getIso4127CurrencyCodes(Set<Offer> offers) {
+		return offers.stream()
+				.flatMap(it -> it.getPrices().stream())
+				.map(OfferPrice::getIso4127CurrencyCode)
+				.collect(Collectors.toSet());
+	}
 }

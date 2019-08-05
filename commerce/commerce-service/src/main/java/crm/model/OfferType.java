@@ -1,4 +1,4 @@
-package crm.entity;
+package crm.model;
 
 public enum OfferType {
 	SINGLE,

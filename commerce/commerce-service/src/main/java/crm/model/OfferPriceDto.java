@@ -1,6 +1,5 @@
 package crm.model;
 
-import crm.entity.Quality;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,19 +7,21 @@ import lombok.Setter;
 @Setter
 public class OfferPriceDto {
 
-    private String iso4127CurrencyCode;
+	private String iso4127CurrencyCode;
 
-    private String iso3166CountryCode;
+	private String iso3166CountryCode;
 
-    private String name;
+	private String name;
 
-    private Double price;
+	private Double price;
 
-    private Double tax;
+	private Double tax;
 
-    private Quality quality;
+	private Quality quality;
 
-    private String priceExternalReference;
+	private String priceExternalReference;
+	
+	private TechProviderDto platform;
 
-    private String currencySymbol;
+	private String currencySymbol;
 }

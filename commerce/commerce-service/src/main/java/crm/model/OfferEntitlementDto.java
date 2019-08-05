@@ -1,8 +1,5 @@
 package crm.model;
 
-import crm.entity.DeviceType;
-import crm.entity.ExpirationType;
-import crm.entity.PeriodType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
