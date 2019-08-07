@@ -27,12 +27,6 @@ spring:
 server:
   port: 9017
 
-dyball:
-  apiKey: ${DYBALL_APIKEY}
-  selfApiKey: ${DYBALL_SELF_APIKEY}
-
-ecoes:
-  apiKey: ${ECOES_APIKEY}
-
-xo:
-  apiKey: ${XO_APIKEY}
+security:
+  jwt:
+    key: ${JWT_AUTH}
