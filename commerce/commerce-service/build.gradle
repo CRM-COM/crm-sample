@@ -13,6 +13,7 @@ apply plugin: 'java'
 ext {
     name = 'commerce-service'
     description = 'Commerce service'
+    mapstructVersion = "1.2.0.Final"
 }
 
 apply from:'../../bootservice.gradle'
@@ -25,6 +26,12 @@ dependencies {
     compile 'org.springframework.cloud:spring-cloud-starter-kubernetes'
     compile 'io.springfox:springfox-swagger2:2.9.2'
     compile 'io.springfox:springfox-swagger-ui:2.9.2'
+
+    compileOnly "org.mapstruct:mapstruct-processor:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
+    testCompileClasspath "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'junit:junit'
