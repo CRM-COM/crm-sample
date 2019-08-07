@@ -27,6 +27,13 @@ spring:
           filters:
             - RewritePath=/api/(?<backoffice>.*), /$\{backoffice}
 
+        - id: commerce-service
+          uri: http://commerce-service:9017
+          predicates:
+            - Path=/api/commerce/**
+          filters:
+            - RewritePath=/api/(?<commerce>.*), /$\{commerce}
+
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

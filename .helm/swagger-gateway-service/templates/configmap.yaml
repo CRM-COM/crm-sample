@@ -10,6 +10,9 @@ data:
           path: /member/**
         backoffice-service:
           path: /backoffice/**
+        commerce-service:
+          path: /commerce/**
 
     member-service.ribbon.listOfServers: "http://member-service:9014"
     backoffice-service.ribbon.listOfServers: "http://backoffice-service:9015"
+    commerce-service.ribbon.listOfServers: "http://commerce-service:9017"
