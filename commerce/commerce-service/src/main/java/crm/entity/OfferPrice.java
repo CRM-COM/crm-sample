@@ -1,6 +1,5 @@
 package crm.entity;
 
-import crm.model.Quality;
 import lombok.*;
 import org.hibernate.annotations.ResultCheckStyle;
 import org.hibernate.annotations.SQLDelete;
@@ -8,7 +7,6 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,7 +38,6 @@ public class OfferPrice extends AuditBase {
 
 	private Double tax;
 
-	@Enumerated(EnumType.STRING)
 	private String quality;
 	
 	@Column(length=64)

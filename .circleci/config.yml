@@ -47,10 +47,10 @@ jobs:
           command: |
             export VERSION=`cat version.txt`
 
-            docker save -o docker-cache/member-image.tar eu.gcr.io/crm-ecenter/member-service:${VERSION}
-            docker save -o docker-cache/gateway-image.tar eu.gcr.io/crm-ecenter/gateway-service:${VERSION}
-            docker save -o docker-cache/backoffice-image.tar eu.gcr.io/crm-ecenter/backoffice-service:${VERSION}
-            docker save -o docker-cache/swagger-gateway-service.tar eu.gcr.io/crm-ecenter/swagger-gateway-service:${VERSION}
+#            docker save -o docker-cache/member-image.tar eu.gcr.io/crm-ecenter/member-service:${VERSION}
+#            docker save -o docker-cache/gateway-image.tar eu.gcr.io/crm-ecenter/gateway-service:${VERSION}
+#            docker save -o docker-cache/backoffice-image.tar eu.gcr.io/crm-ecenter/backoffice-service:${VERSION}
+#            docker save -o docker-cache/swagger-gateway-service.tar eu.gcr.io/crm-ecenter/swagger-gateway-service:${VERSION}
             docker save -o docker-cache/commerce-service.tar eu.gcr.io/crm-ecenter/commerce-service:${VERSION}
 
       - persist_to_workspace:
@@ -71,10 +71,10 @@ jobs:
       - run:
           name: Load docker image from cache
           command: |
-            docker load --input docker-cache/member-image.tar
-            docker load --input docker-cache/gateway-image.tar
-            docker load --input docker-cache/backoffice-image.tar
-            docker load --input docker-cache/swagger-gateway-service.tar
+#            docker load --input docker-cache/member-image.tar
+#            docker load --input docker-cache/gateway-image.tar
+#            docker load --input docker-cache/backoffice-image.tar
+#            docker load --input docker-cache/swagger-gateway-service.tar
             docker load --input docker-cache/commerce-service.tar
 
       - run:
@@ -90,10 +90,10 @@ jobs:
           command: |
             export VERSION=`cat version.txt`
 
-            docker push eu.gcr.io/crm-ecenter/member-service:${VERSION}
-            docker push eu.gcr.io/crm-ecenter/gateway-service:${VERSION}
-            docker push eu.gcr.io/crm-ecenter/backoffice-service:${VERSION}
-            docker push eu.gcr.io/crm-ecenter/swagger-gateway-service:${VERSION}
+#            docker push eu.gcr.io/crm-ecenter/member-service:${VERSION}
+#            docker push eu.gcr.io/crm-ecenter/gateway-service:${VERSION}
+#            docker push eu.gcr.io/crm-ecenter/backoffice-service:${VERSION}
+#            docker push eu.gcr.io/crm-ecenter/swagger-gateway-service:${VERSION}
             docker push eu.gcr.io/crm-ecenter/commerce-service:${VERSION}
       - run:
           name: Set current context
@@ -105,7 +105,7 @@ jobs:
             export VERSION=`cat version.txt`
             echo "Version $VERSION"
 
-            for i in .helm/*; do
+            for i in .helm/commerce-service; do
               helm upgrade --install ${i##*/} --namespace=backend --set-string image.tag=$VERSION $i
             done
 
