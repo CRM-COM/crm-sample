@@ -17,7 +17,7 @@ public class OfferPriceDto {
 
 	private Double tax;
 
-	private Quality quality;
+	private String quality;
 
 	private String priceExternalReference;
 	
