@@ -3,6 +3,8 @@ package crm.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 public class OfferPriceDto {
@@ -17,7 +19,7 @@ public class OfferPriceDto {
 
 	private Double tax;
 
-	private String quality;
+	private Set<Quality> quality;
 
 	private String priceExternalReference;
 	

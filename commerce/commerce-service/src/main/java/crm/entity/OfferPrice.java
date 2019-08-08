@@ -41,7 +41,7 @@ public class OfferPrice extends AuditBase {
 	private Double tax;
 
 	@Enumerated(EnumType.STRING)
-	private String quality;
+	private Set<Quality> quality;
 	
 	@Column(length=64)
 	private String priceExternalReference;
