@@ -16,23 +16,23 @@ spring:
         - id: member-service
           uri: http://member-service:9014
           predicates:
-            - Path=/api/member/**
+            - Path=/v3/api/member/**
           filters:
-            - RewritePath=/api/(?<member>.*), /$\{member}
+            - RewritePath=/v3/api/(?<member>.*), /$\{member}
 
         - id: backoffice-service
           uri: http://backoffice-service:9015
           predicates:
-            - Path=/api/backoffice/**
+            - Path=/v3/api/backoffice/**
           filters:
-            - RewritePath=/api/(?<backoffice>.*), /$\{backoffice}
+            - RewritePath=/v3/api/(?<backoffice>.*), /$\{backoffice}
 
         - id: commerce-service
           uri: http://commerce-service:9017
           predicates:
-            - Path=/api/commerce/**
+            - Path=/v3/api/commerce/**
           filters:
-            - RewritePath=/api/(?<commerce>.*), /$\{commerce}
+            - RewritePath=/v3/api/(?<commerce>.*), /$\{commerce}
 
 logging:
   level:
