@@ -105,7 +105,7 @@ jobs:
             export VERSION=`cat version.txt`
             echo "Version $VERSION"
 
-            for i in .helm/commerce-service; do
+            for i in .helm/swagger-gateway-service; do
               helm upgrade --install ${i##*/} --namespace=backend --set-string image.tag=$VERSION $i
             done
 
