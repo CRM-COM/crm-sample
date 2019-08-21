@@ -2,9 +2,8 @@ package crm.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ import java.nio.file.Paths;
 @RequestMapping("/spectacle")
 public class SpectacleController {
 
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public void refresh() throws IOException, InterruptedException {
         log.info("Creating spectacle");
         String commercePath = "http://commerce-service:9017/v2/api-docs";
@@ -27,7 +26,7 @@ public class SpectacleController {
         log.info("Created spectacle");
     }
 
-    @GetMapping("/commerce")
+    @RequestMapping(method = RequestMethod.GET, path = "/commerce")
     public String commerce() {
         return "commerce.html";
     }
