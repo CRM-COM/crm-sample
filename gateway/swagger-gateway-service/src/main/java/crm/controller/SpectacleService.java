@@ -1,19 +1,19 @@
 package crm.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Slf4j
-@RestController("/refresh")
-public class SpectacleController {
+@Service
+public class SpectacleService {
 
-    @GetMapping
+    @PostConstruct
     public void refresh() throws IOException, InterruptedException {
         log.info("Creating spectacle");
         String commercePath = "http://commerce-service:9017/v2/api-docs";
