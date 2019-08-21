@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Slf4j
-@RestController("/spectacle")
+@RestController("/refresh")
 public class SpectacleController {
 
     @GetMapping
