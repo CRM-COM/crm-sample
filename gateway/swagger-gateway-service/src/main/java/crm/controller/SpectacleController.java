@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -27,7 +28,7 @@ public class SpectacleController {
     }
 
     @GetMapping("/commerce")
-    public String commerce() {
+    public String commerce(Map<String, Object> model) {
         return "commerce.html";
     }
 }
