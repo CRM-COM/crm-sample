@@ -1,6 +1,7 @@
 package crm.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/spectacle")
 public class SpectacleController {
 
@@ -26,8 +27,8 @@ public class SpectacleController {
         log.info("Created spectacle");
     }
 
-    @RequestMapping("/commerce")
+    @GetMapping("/commerce")
     public String commerce() {
-        return "commerce";
+        return "commerce.html";
     }
 }
