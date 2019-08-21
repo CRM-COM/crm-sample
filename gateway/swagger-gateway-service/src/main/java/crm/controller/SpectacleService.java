@@ -20,7 +20,7 @@ public class SpectacleService {
         String swaggerJson = new RestTemplate().getForObject(commercePath, String.class);
         if (swaggerJson == null) return;
         Files.write(Paths.get("./swagger.json"), swaggerJson.getBytes());
-        Runtime.getRuntime().exec(new String[]{"bash", "-c", "spectacle swagger.json -t ./src/main/resources/public -f commerce.html"}).waitFor();
+        Runtime.getRuntime().exec(new String[]{"bash", "-c", "spectacle swagger.json -t ./src/main/resources/templates -f commerce.html"}).waitFor();
         log.info("Created spectacle");
     }
 }
