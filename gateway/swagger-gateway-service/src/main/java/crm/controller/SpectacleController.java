@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -21,14 +20,14 @@ public class SpectacleController {
         log.info("Creating spectacle");
         String commercePath = "http://commerce-service:9017/v2/api-docs";
         String swaggerJson = new RestTemplate().getForObject(commercePath, String.class);
-        if(swaggerJson == null) return;
+        if (swaggerJson == null) return;
         Files.write(Paths.get("./swagger.json"), swaggerJson.getBytes());
-        Runtime.getRuntime().exec(new String[]{"bash","-c","spectacle swagger.json -t ./src/main/resources/public -f commerce.html"}).waitFor();
+        Runtime.getRuntime().exec(new String[]{"bash", "-c", "spectacle swagger.json -t ./src/main/resources/public -f commerce.html"}).waitFor();
         log.info("Created spectacle");
     }
 
-    @GetMapping("/commerce")
-    public String commerce(Map<String, Object> model) {
-        return "commerce.html";
+    @RequestMapping("/commerce")
+    public String commerce() {
+        return "commerce";
     }
 }
