@@ -10,6 +10,6 @@ public class SpectacleServicesController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/commerce")
     public String commerce() {
-        return "commerce.html";
+        return "commerce";
     }
 }
