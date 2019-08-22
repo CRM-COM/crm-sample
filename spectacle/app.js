@@ -3,32 +3,12 @@
 const express = require('express');
 const fs = require('fs');
 const request = require('request');
-
-var stream = fs.createWriteStream('swagger.json', { defaultEncoding: 'utf16le' });
-
-stream.once('error', function (err) {
-  console.log(err);
-});
-
-stream.once('end', function () {
-  console.log('response written');
-});
-
-request('https://swagger.crmcloudapi.com/commerce/v2/api-docs')
-  .once('error', function (err) {
-    console.log('Request Error: ' + err);
-  }).pipe(stream);
-
 const exec = require('child_process').exec;
 
-const child = exec('spectacle swagger.json -t ./public/commerce -f spectacle.html',
-    (error, stdout, stderr) => {
-        console.log(`stdout: ${stdout}`);
-        console.log(`stderr: ${stderr}`);
-        if (error !== null) {
-            console.log(`exec error: ${error}`);
-        }
-});
+const services = ['commerce', 'member', 'backoffice']
+
+getSwaggerJsonForServices()
+createSpectacleFiles()
 
 const PORT = 8080;
 
@@ -40,8 +20,45 @@ app.get('/', (req, res) => {
   res.send('Hello\n');
 });
 
-app.get('/health-check',(req,res)=> {
- res.sendStatus(200);
+app.get('/services', (req, res) => {
+  res.send(process.env.SERVICES);
+});
+
+app.get('/health-check', (req, res) => {
+  res.sendStatus(200);
 });
 
 app.listen(PORT);
+
+
+function getSwaggerJsonForServices() {
+  services.forEach(service => {
+    var stream = fs.createWriteStream(`${service}.json`, { defaultEncoding: 'utf16le' });
+
+    stream.once('error', function (err) {
+      console.log(err);
+    });
+
+    stream.once('end', function () {
+      console.log('response written');
+    });
+
+    request(`https://swagger.crmcloudapi.com/${service}/v2/api-docs`)
+      .once('error', function (err) {
+        console.log('Request Error: ' + err);
+      }).pipe(stream);
+  })
+}
+
+function createSpectacleFiles() {
+  services.forEach(service => {
+    exec(`spectacle ${service}.json -t ./public/${service} -f spectacle.html`,
+      (error, stdout, stderr) => {
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+        if (error !== null) {
+          console.log(`exec error: ${error}`);
+        }
+      });
+  })
+}

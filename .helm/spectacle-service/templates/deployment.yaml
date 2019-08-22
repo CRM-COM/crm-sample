@@ -37,6 +37,11 @@ spec:
           - name: JAVA_OPTS
             value: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044
           {{- end }}
+          - name: SERVICES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template  "backend-service.fullname" . }}
+                  key: services
 
           volumeMounts:
             - mountPath: /var/run/config
