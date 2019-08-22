@@ -68,7 +68,7 @@ public class RestErrorHandler {
         return new RestMicroserviceException(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    @ExceptionHandler(FileNotFoundException.class)
+    @ExceptionHandler(ExpiredJwtException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ResponseBody
     public RestMicroserviceException handleExpiredJwtException(ExpiredJwtException ex) {
