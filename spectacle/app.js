@@ -7,8 +7,8 @@ const exec = require('child_process').exec;
 
 const services = ['commerce', 'member', 'backoffice']
 
-//getSwaggerJsonForServices()
-//createSpectacleFiles()
+getSwaggerJsonForServices()
+createSpectacleFiles()
 
 const PORT = 8080;
 
@@ -22,6 +22,10 @@ app.get('/', (req, res) => {
 
 app.get('/services', (req, res) => {
   res.send(process.env.SERVICES);
+
+  process.env.SERVICES.forEach(service => {
+    console.log(service)
+  })
 });
 
 app.get('/health-check', (req, res) => {
