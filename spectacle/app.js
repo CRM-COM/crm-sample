@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/health-check',(req,res)=> {
- res.send ("Health check passed");
+ res.sendStatus(200);
 });
 
-app.listen(PORT, 'localhost');
+app.listen(PORT);
