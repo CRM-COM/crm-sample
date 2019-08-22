@@ -2,6 +2,7 @@ package crm.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import crm.exception.MicroserviceException;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
@@ -63,11 +64,19 @@ public class JwtService {
             return null;
 
         var trimmedToken = token.substring(7);
-        var claims = Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(trimmedToken)
-                .getBody();
+        var claims = decodeToken(trimmedToken);
         return new DecodedToken(claims.get("keycloakExternalId", String.class), claims.getSubject());
+    }
+
+    private Claims decodeToken(String trimmedToken) {
+        try {
+            return Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(trimmedToken)
+                    .getBody();
+        } catch (Exception e) {
+            throw new MicroserviceException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 
     public DecodedToken decodeKeycloakToken(String JWTEncoded) {

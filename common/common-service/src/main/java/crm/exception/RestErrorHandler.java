@@ -69,7 +69,7 @@ public class RestErrorHandler {
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
-    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public RestMicroserviceException handleExpiredJwtException(ExpiredJwtException ex) {
         log.error("Error caught: ", ex);
