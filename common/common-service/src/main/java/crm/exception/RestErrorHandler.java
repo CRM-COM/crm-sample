@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.http.HttpStatus;
@@ -65,6 +66,15 @@ public class RestErrorHandler {
         log.error("Error caught: ", ex);
 
         return new RestMicroserviceException(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(FileNotFoundException.class)
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public RestMicroserviceException handleExpiredJwtException(ExpiredJwtException ex) {
+        log.error("Error caught: ", ex);
+
+        return new RestMicroserviceException(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     /**
