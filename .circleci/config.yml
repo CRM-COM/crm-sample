@@ -48,7 +48,7 @@ jobs:
             export VERSION=`cat version.txt`
 
             docker build -t spectacle-service:${VERSION} ./spectacle
-            docker tag spectacle-service:${CIRCLE_BUILD_NUM} eu.gcr.io/crm-ecenter/member-service:${VERSION}
+            docker tag spectacle-service:${CIRCLE_BUILD_NUM} eu.gcr.io/crm-ecenter/spectacle-service:${VERSION}
 
             docker save -o docker-cache/member-image.tar eu.gcr.io/crm-ecenter/member-service:${VERSION}
             docker save -o docker-cache/gateway-image.tar eu.gcr.io/crm-ecenter/gateway-service:${VERSION}
