@@ -21,7 +21,7 @@ request('https://swagger.crmcloudapi.com/commerce/v2/api-docs')
 
 const exec = require('child_process').exec;
 
-const child = exec('spectacle swagger.json -t ./public/commerce -f commerce.html',
+const child = exec('spectacle swagger.json -t ./public/commerce -f spectacle.html',
     (error, stdout, stderr) => {
         console.log(`stdout: ${stdout}`);
         console.log(`stderr: ${stderr}`);
