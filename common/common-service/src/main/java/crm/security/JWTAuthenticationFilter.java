@@ -31,6 +31,10 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
             HttpServletResponse res = (HttpServletResponse) response;
             res.setStatus(403);
             res.getWriter().write("Invalid jwt token");
+        } catch (Exception e) {
+            HttpServletResponse res = (HttpServletResponse) response;
+            res.setStatus(401);
+            res.getWriter().write(e.getMessage());
         }
     }
 }
