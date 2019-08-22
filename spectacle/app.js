@@ -7,8 +7,8 @@ const exec = require('child_process').exec;
 
 const services = ['commerce', 'member', 'backoffice']
 
-getSwaggerJsonForServices()
-createSpectacleFiles()
+//getSwaggerJsonForServices()
+//createSpectacleFiles()
 
 const PORT = 8080;
 
