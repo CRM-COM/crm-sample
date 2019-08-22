@@ -15,7 +15,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-RUN npm install -g spectacle-docs
+RUN npm install -g spectacle-docs --unsafe-perm
 
 EXPOSE 8080
 CMD [ "node", "app.js" ]
