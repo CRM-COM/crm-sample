@@ -37,7 +37,11 @@ const app = express();
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  res.send('Hello world\n');
+  res.send('Hello\n');
+});
+
+app.get('/health-check',(req,res)=> {
+ res.send ("Health check passed");
 });
 
 app.listen(PORT, 'localhost');
