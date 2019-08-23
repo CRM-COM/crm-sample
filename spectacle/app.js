@@ -5,7 +5,7 @@ const fs = require('fs');
 const request = require('request');
 const exec = require('child_process').exec;
 
-const services = process.env.SERVICES.split();
+const services = process.env.SERVICES.split(',');
 
 getSwaggerJsonForServices()
 createSpectacleFiles()
