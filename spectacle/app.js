@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 app.get('/services', (req, res) => {
   res.send(process.env.SERVICES);
 
-  process.env.SERVICES.forEach(service => {
+  JSON.parse(process.env.SERVICES).forEach(service => {
     console.log(service)
   })
 });
