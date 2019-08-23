@@ -5,7 +5,7 @@ const fs = require('fs');
 const request = require('request');
 const exec = require('child_process').exec;
 
-const services = ['commerce', 'member', 'backoffice']
+const services = process.env.SERVICES.split();
 
 getSwaggerJsonForServices()
 createSpectacleFiles()
@@ -21,11 +21,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/services', (req, res) => {
-  res.send(process.env.SERVICES);
-
-  process.env.SERVICES.split().forEach(service => {
-    console.log(service)
-  })
+  res.send(services);
 });
 
 app.get('/health-check', (req, res) => {
